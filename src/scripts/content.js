@@ -6,8 +6,30 @@ export const sourceNotes = {
     "AI 辅助画面仅用于象征性场景、转场和视觉氛围，不作为历史影像资料。"
   ],
   history: [
-    "何敬平与《把牢底坐穿》相关史料、1949 年 11 月 27 日相关史实、渣滓洞、白公馆、歌乐山旧址资料仍建议在正式发布前由创作者回到权威馆方或出版物逐条复核。",
-    "现代旧址照片只能作为今天的旧址记录，不得加工后标注为 1949 年真实影像。"
+    {
+      title: "红岩革命历史博物馆",
+      sourceUrl: "https://www.hongyanmuseum.cn/",
+      note: "用于复核何敬平、《把牢底坐穿》、渣滓洞、白公馆、歌乐山旧址及 1949 年 11 月 27 日相关史实。"
+    },
+    {
+      title: "重庆大学",
+      sourceUrl: "https://www.cqu.edu.cn/",
+      note: "用于复核重庆大学校园、教学与校史相关基础信息。"
+    },
+    {
+      title: "重庆大学科学城校区",
+      sourceUrl: "https://huxi.cqu.edu.cn/",
+      note: "用于复核虎溪/科学城校区空间与管理信息。"
+    },
+    {
+      title: "重庆市人民政府网",
+      sourceUrl: "https://www.cq.gov.cn/",
+      note: "用于复核现代重庆城市基础信息与正式表述。"
+    },
+    {
+      title: "史实使用边界",
+      note: "现代旧址照片只能作为今天的旧址记录，不得加工后标注为 1949 年真实影像。"
+    }
   ],
   images: [
     { file: "H01_Zhazidong_Exterior_2006.jpg", title: "ChongqingZhazidong", author: "Fanghong", sourceUrl: "https://commons.wikimedia.org/wiki/File:ChongqingZhazidong.jpg", license: "CC BY 2.5", licenseUrl: "https://creativecommons.org/licenses/by/2.5/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
@@ -29,6 +51,9 @@ export const sourceNotes = {
   ai: [
     "AI_Cover_DarkLetter.webp、AI_WindowLight.webp、AI_BlankPrisonPaper.webp、AI_FireShadowWall.webp、AI_ModernDeskNight.webp、AI_BarsToBridge.webp、AI_RedLineCity.webp、AI_ClassroomLight.webp、AI_MechanicalDawn.webp、AI_UnfoldedLetter.webp、AI_FinalDawn.webp 均为 AI 辅助情境化创作。",
     "Overlay_BurntEdge.png、Overlay_WarmSteam.png、Overlay_RainFog.png、Overlay_RedPlum.png 为透明叠加素材。"
+  ],
+  originals: [
+    "本轮未接入创作者原创拍摄素材；第三章真实写信手部、划掉“很好”的动作等仍建议补拍后替换 AI 桌面画面。"
   ],
   pending: [
     "第二批素材包中的 xlsx 总表包含逐图原始文件页；本弹窗已列出选用素材的许可信息，但 H06/H08/E04/E05/E07/L03/L04/F05/F08/F10 的原始文件页建议发布前由人工回到 xlsx 再次核对。",

@@ -2,15 +2,33 @@ import { existsSync } from "node:fs";
 import { mkdir } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { resolve } from "node:path";
+import { createServer } from "node:net";
 import { chromium } from "playwright";
 
 const expectedHeight = 31600;
 const output = "dist/next-generation-letter-1440x31600.png";
-const port = process.env.PORT || "4173";
-const baseUrl = `http://127.0.0.1:${port}`;
 
 function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function findAvailablePort(preferredPort) {
+  return new Promise((resolve, reject) => {
+    const server = createServer();
+    server.once("error", (error) => {
+      if (error.code === "EADDRINUSE") {
+        findAvailablePort(0).then(resolve, reject);
+      } else {
+        reject(error);
+      }
+    });
+    server.once("listening", () => {
+      const address = server.address();
+      const port = typeof address === "object" && address ? address.port : preferredPort;
+      server.close(() => resolve(String(port)));
+    });
+    server.listen(Number(preferredPort), "127.0.0.1");
+  });
 }
 
 async function waitForServer(url, timeout = 20000) {
@@ -31,6 +49,8 @@ if (!existsSync("dist/index.html")) {
   console.warn("dist/index.html not found. Run npm run build before npm run capture.");
 }
 
+const port = await findAvailablePort(process.env.PORT || "4173");
+const baseUrl = `http://127.0.0.1:${port}`;
 const viteBin = resolve("node_modules/vite/bin/vite.js");
 server = spawn(process.execPath, [viteBin, "preview", "--host", "127.0.0.1", "--port", port], {
   stdio: "inherit",
