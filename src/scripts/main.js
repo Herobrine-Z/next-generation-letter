@@ -9,9 +9,10 @@ import { createImage, preloadCaptureImages } from "./asset-loader.js";
 import { createRedThread } from "./red-thread.js";
 import { renderMedia } from "./render-media.js";
 import { createOverlays } from "./overlays.js";
-import { setupScrollScenes, setupNavSpy } from "./scroll-scenes.js";
-import { setupModal, setupMobileNav } from "./accessibility.js";
+import { refreshScrollScenes, setupChapterProgress, setupScrollScenes, setupNavSpy } from "./scroll-scenes.js";
+import { setupArchiveDialog, setupModal, setupMobileNav } from "./accessibility.js";
 import { setupEnvelopeIntro } from "./envelope-intro.js";
+import { setupAudioController } from "./audio-controller.js";
 
 const params = new URLSearchParams(window.location.search);
 if (params.get("capture") === "1") {
@@ -31,11 +32,12 @@ function escapeHtml(value) {
 function renderProfileCard(profile) {
   if (!profile) return "";
   return `
-    <div class="real-archive-card">
+    <div class="real-archive-card" data-reveal="archive">
       <div>
         <strong>${escapeHtml(profile.name)}</strong>
         <span>${escapeHtml(profile.years)}</span>
         ${profile.details.map((detail) => `<p>${escapeHtml(detail)}</p>`).join("")}
+        <button class="archive-trigger" type="button" data-archive-trigger="archive-he-jingping">档案 01</button>
       </div>
     </div>
   `;
@@ -44,7 +46,7 @@ function renderProfileCard(profile) {
 function renderTimeline(items) {
   if (!items?.length) return "";
   return `
-    <ol class="thin-timeline" aria-label="极简时间线">
+    <ol class="thin-timeline" aria-label="极简时间线" data-reveal="archive">
       ${items.map((item) => `<li><time>${escapeHtml(item.date)}</time><span>${escapeHtml(item.text)}</span></li>`).join("")}
     </ol>
   `;
@@ -53,9 +55,13 @@ function renderTimeline(items) {
 function renderChapter(chapter, index) {
   const section = document.createElement("section");
   section.id = chapter.id;
-  section.className = `chapter-section ${chapter.theme}`;
+  section.className = `chapter-section story-chapter ${chapter.theme}`;
   section.style.setProperty("--section-height", `${chapter.height}px`);
   section.setAttribute("aria-labelledby", `${chapter.id}-title`);
+  section.dataset.chapter = "";
+  section.dataset.chapterIndex = chapter.number;
+  section.dataset.chapterTitle = chapter.title;
+  section.dataset.chapterShortTitle = chapter.shortTitle;
 
   const hero = chapter.assets.find((asset) => asset.role === "hero") || chapter.assets[0];
   if (hero) {
@@ -82,6 +88,7 @@ function renderChapter(chapter, index) {
 
   const copy = document.createElement("div");
   copy.className = "chapter-copy reveal";
+  copy.dataset.reveal = "text";
   copy.innerHTML = [
     `<span class="chapter-number">${chapter.number}</span>`,
     chapter.label ? `<p class="chapter-label">${escapeHtml(chapter.label)}</p>` : "",
@@ -122,7 +129,34 @@ setupModal({
   content: document.querySelector(".source-modal__content"),
   sourceNotes
 });
+setupArchiveDialog({
+  shell: document.querySelector(".archive-shell"),
+  entries: {
+    "archive-he-jingping": {
+      eyebrow: "档案 01",
+      title: "何敬平与《把牢底坐穿》",
+      body: [
+        "何敬平，重庆巴南木洞人，1918-1949。",
+        "1948 年夏，于渣滓洞创作《把牢底坐穿》。",
+        "本页相关史实依据红岩革命历史博物馆等公开资料复核；当代回信文字为艺术化叙事转译，并非历史人物原话。"
+      ]
+    }
+  }
+});
 preloadCaptureImages(story);
-setupEnvelopeIntro();
-setupScrollScenes();
-setupNavSpy(chapters);
+
+const audio = setupAudioController(document.querySelector(".audio-toggle"));
+let storyInitialized = false;
+function enterStory(event) {
+  if (storyInitialized) return;
+  storyInitialized = true;
+  audio.startCityAmbient();
+  setupScrollScenes();
+  setupNavSpy(chapters);
+  setupChapterProgress(chapters);
+  requestAnimationFrame(() => refreshScrollScenes(true));
+  window.setTimeout(() => story.focus({ preventScroll: true }), 0);
+}
+
+window.addEventListener("envelope:intro-complete", enterStory);
+setupEnvelopeIntro({ audio });

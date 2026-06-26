@@ -4,12 +4,36 @@ import { typewriter } from "./typewriter.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function revealVars(kind, isSmallMobile) {
+  const distance = isSmallMobile ? 14 : 26;
+  if (kind === "image") {
+    return {
+      from: { autoAlpha: 0, y: isSmallMobile ? 10 : 18, scale: 1.025 },
+      to: { autoAlpha: 1, y: 0, scale: 1, duration: isSmallMobile ? 0.55 : 0.82 }
+    };
+  }
+  if (kind === "archive") {
+    return {
+      from: { autoAlpha: 0, x: isSmallMobile ? 8 : 16 },
+      to: { autoAlpha: 1, x: 0, duration: isSmallMobile ? 0.5 : 0.72 }
+    };
+  }
+  return {
+    from: { autoAlpha: 0, y: distance },
+    to: { autoAlpha: 1, y: 0, duration: isSmallMobile ? 0.58 : 0.86 }
+  };
+}
+
+export function refreshScrollScenes(force = false) {
+  ScrollTrigger.refresh(force);
+}
+
 export function setupScrollScenes() {
   const isCapture = document.documentElement.dataset.capture === "true";
   const mm = gsap.matchMedia();
 
   if (isCapture) {
-    document.querySelectorAll(".reveal").forEach((el) => {
+    document.querySelectorAll(".reveal, [data-reveal]").forEach((el) => {
       el.style.opacity = 1;
       el.style.transform = "none";
     });
@@ -22,34 +46,35 @@ export function setupScrollScenes() {
     {
       reduceMotion: "(prefers-reduced-motion: reduce)",
       isDesktop: "(min-width: 1025px)",
-      isMobile: "(max-width: 1024px)",
       isSmallMobile: "(max-width: 640px)"
     },
     (context) => {
       const { reduceMotion, isDesktop, isSmallMobile } = context.conditions;
+      const revealTargets = gsap.utils.toArray("[data-reveal]");
+
       if (reduceMotion) {
-        gsap.set(".reveal", { autoAlpha: 1, y: 0 });
+        gsap.set(revealTargets, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
         gsap.set(".thread-path", { strokeDashoffset: 0 });
         gsap.set(".strike-word", { "--strike-progress": 1 });
         return;
       }
 
-      gsap.utils.toArray(".reveal").forEach((el) => {
-        gsap.to(el, {
-          autoAlpha: 1,
-          y: 0,
+      revealTargets.forEach((el) => {
+        const vars = revealVars(el.dataset.reveal || "text", isSmallMobile);
+        gsap.fromTo(el, vars.from, {
+          ...vars.to,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: el,
-            start: "top 82%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
+            start: "top 84%",
+            once: true
           }
         });
       });
 
       if (!isSmallMobile) {
         gsap.utils.toArray(".asset-bg img").forEach((img) => {
-          gsap.fromTo(img, { scale: 1.08 }, {
+          gsap.fromTo(img, { scale: 1.05 }, {
             scale: 1,
             ease: "none",
             scrollTrigger: {
@@ -80,25 +105,12 @@ export function setupScrollScenes() {
 
       gsap.set(".strike-word", { "--strike-progress": 0 });
 
-      gsap.utils.toArray(".film-frame").forEach((frame, index) => {
-        gsap.from(frame, {
-          autoAlpha: 0,
-          y: 28,
-          delay: (index % 2) * 0.08,
-          scrollTrigger: {
-            trigger: frame,
-            start: "top 86%",
-            toggleActions: "play none none reverse"
-          }
-        });
-      });
-
       if (!isSmallMobile) {
         gsap.to(".chapter-overlay--steam", {
           yPercent: -3,
           ease: "sine.inOut",
           scrollTrigger: {
-            trigger: ".ordinary",
+            trigger: ".ordinary-road",
             start: "top bottom",
             end: "bottom top",
             scrub: 1.4
@@ -108,7 +120,7 @@ export function setupScrollScenes() {
           xPercent: 2,
           ease: "sine.inOut",
           scrollTrigger: {
-            trigger: ".ordinary",
+            trigger: ".ordinary-road",
             start: "top bottom",
             end: "bottom top",
             scrub: 1.6
@@ -125,8 +137,6 @@ export function setupScrollScenes() {
           }
         });
       }
-
-      return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     }
   );
 
@@ -160,6 +170,43 @@ export function setupNavSpy(chapters) {
         if (!self.isActive) return;
         navLinks.forEach((link) => link.classList.toggle("is-active", link.hash === `#${chapter.id}`));
         if (mobileLabel) mobileLabel.textContent = chapter.number;
+      }
+    });
+  });
+}
+
+export function setupChapterProgress(chapters) {
+  const root = document.querySelector("[data-chapter-progress]");
+  if (!root) return () => {};
+
+  const fill = root.querySelector(".chapter-progress__fill");
+  const number = root.querySelector(".chapter-progress__number");
+  const title = root.querySelector(".chapter-progress__title");
+  const setProgress = gsap.quickSetter(root, "--story-progress");
+
+  const setActive = (chapter) => {
+    if (!chapter) return;
+    number.textContent = chapter.number;
+    title.textContent = chapter.shortTitle || chapter.title;
+  };
+
+  if (fill) gsap.set(fill, { transformOrigin: "top" });
+  setActive(chapters[0]);
+
+  ScrollTrigger.create({
+    trigger: ".story",
+    start: "top top",
+    end: "bottom bottom",
+    onUpdate: (self) => setProgress(self.progress.toFixed(4))
+  });
+
+  chapters.forEach((chapter) => {
+    ScrollTrigger.create({
+      trigger: `#${chapter.id}`,
+      start: "top center",
+      end: "bottom center",
+      onToggle: (self) => {
+        if (self.isActive) setActive(chapter);
       }
     });
   });

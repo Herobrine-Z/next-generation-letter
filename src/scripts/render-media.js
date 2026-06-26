@@ -4,6 +4,7 @@ function createFrame(asset, index = 0) {
   const frame = document.createElement("figure");
   const roleClass = asset.role === "paper" ? "paper-frame" : asset.role === "wide" ? "film-frame film-frame--wide" : "film-frame";
   frame.className = roleClass;
+  frame.dataset.reveal = asset.role === "archive" ? "archive" : "image";
   frame.style.setProperty("--asset-position", asset.position || "center");
   frame.append(createImage(asset, index < 2));
   frame.insertAdjacentHTML("beforeend", `<figcaption class="sr-only">${asset.alt || ""}</figcaption>`);
@@ -13,6 +14,7 @@ function createFrame(asset, index = 0) {
 function renderRoadChapter(chapter) {
   const media = document.createElement("div");
   media.className = "chapter-media visual-stack visual-stack--road reveal";
+  media.dataset.reveal = "image";
   const road = chapter.assets.find((asset) => asset.role === "wide");
   const archive = chapter.assets.find((asset) => asset.role === "archive");
   if (road) media.append(createFrame(road, 0));
@@ -27,6 +29,7 @@ export function renderMedia(chapter, index) {
 
   const media = document.createElement("div");
   media.className = "chapter-media visual-stack reveal";
+  media.dataset.reveal = "image";
 
   if (chapter.id === "too-light") {
     media.innerHTML = `
@@ -43,6 +46,7 @@ export function renderMedia(chapter, index) {
 
   if (chapter.id === "ending") {
     media.className = "chapter-media final-letter reveal";
+    media.dataset.reveal = "archive";
     const paper = chapter.assets.find((asset) => asset.role === "paper");
     const letter = document.createElement("div");
     letter.className = "letter-paper letter-paper--final";

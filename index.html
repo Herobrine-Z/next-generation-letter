@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="《下一代，来信了》：2026 重庆青年写给红岩先辈的一封回信。"
@@ -20,28 +20,44 @@
         .reveal { opacity: 1 !important; transform: none !important; }
       </style>
     </noscript>
-    <div class="envelope-intro js-only" data-envelope-intro role="dialog" aria-label="信封开场动画">
+    <div class="envelope-intro js-only" data-envelope-intro data-state="idle" role="dialog" aria-label="信封开场动画">
       <div class="envelope-intro__scene" aria-hidden="true"><img alt="" /></div>
       <div class="envelope-intro__shade" aria-hidden="true"></div>
       <button class="envelope-intro__skip" type="button">跳过开场</button>
-      <div class="envelope-stage" aria-hidden="true">
+      <div class="envelope-stage">
         <p class="envelope-intro__kicker">1948 / 重庆</p>
-        <div class="envelope">
-          <div class="envelope__shadow"></div>
-          <div class="envelope__back"></div>
-          <div class="envelope__letter">
-            <div class="envelope__letter-content">
-              <small>有人在黑暗中写下</small>
-              <strong>下一代，来信了</strong>
-              <span>这封回信，由今天继续写下去</span>
-            </div>
-            <div class="envelope__thread"></div>
-          </div>
-          <div class="envelope__side envelope__side--left"></div>
-          <div class="envelope__side envelope__side--right"></div>
-          <div class="envelope__flap"></div>
-          <div class="envelope__front"></div>
-        </div>
+        <button
+          class="envelope-trigger"
+          type="button"
+          aria-label="点击打开信封"
+          aria-expanded="false"
+        >
+          <span class="envelope" aria-hidden="true">
+            <span class="envelope__shadow"></span>
+            <span class="envelope__back"></span>
+            <span class="envelope__flap-open"></span>
+
+            <span class="envelope__letter" data-visible="false">
+              <span class="letter-content" hidden>
+                <span class="letter-content__eyebrow">有人在黑暗中写下</span>
+                <span class="letter-content__title">下一代，来信了</span>
+                <span class="letter-content__subtitle">这封回信，由今天继续写下去</span>
+                <span class="letter-content__redline"></span>
+              </span>
+            </span>
+
+            <span class="envelope__side envelope__side--left"></span>
+            <span class="envelope__side envelope__side--right"></span>
+            <span class="envelope__front"></span>
+            <span class="envelope__mouth-cover"></span>
+            <span class="envelope__flap-closed"></span>
+
+            <span class="envelope__seal">
+              <span class="envelope__seal-dot"></span>
+            </span>
+          </span>
+        </button>
+        <p class="envelope-intro__hint">点击信封，打开来信</p>
         <p class="envelope-intro__whisper">一封信穿过时间，落到今天的手里。</p>
       </div>
     </div>
@@ -49,11 +65,19 @@
       <p>2026 重庆青年写给红岩先辈的一封回信</p>
     </header>
     <nav class="chapter-nav js-only" aria-label="章节导航"></nav>
+    <aside class="chapter-progress js-only" data-chapter-progress aria-label="阅读进度">
+      <span class="chapter-progress__track" aria-hidden="true"><span class="chapter-progress__fill"></span></span>
+      <span class="chapter-progress__meta" aria-live="polite">
+        <span class="chapter-progress__number">00</span>
+        <span class="chapter-progress__title">序章</span>
+      </span>
+    </aside>
     <button class="mobile-progress js-only" type="button" aria-expanded="false" aria-controls="mobile-nav">
       <span>00</span>
     </button>
     <div id="mobile-nav" class="mobile-nav js-only" hidden></div>
-    <main id="story" class="story" aria-label="下一代，来信了叙事长页"></main>
+    <main id="story" class="story" aria-label="下一代，来信了叙事长页" tabindex="-1"></main>
+    <button class="audio-toggle js-only" type="button" aria-pressed="false" hidden>静音</button>
     <button class="source-button" type="button" aria-haspopup="dialog">资料来源</button>
     <div class="modal-shell" role="dialog" aria-modal="true" aria-labelledby="source-title" hidden>
       <div class="modal-backdrop" data-close></div>
@@ -61,6 +85,15 @@
         <button class="modal-close" type="button" data-close aria-label="关闭资料来源">×</button>
         <h2 id="source-title">资料来源</h2>
         <div class="source-modal__content"></div>
+      </section>
+    </div>
+    <div class="archive-shell js-only" role="dialog" aria-modal="true" aria-labelledby="archive-dialog-title" hidden>
+      <div class="archive-backdrop" data-archive-close></div>
+      <section class="archive-panel" tabindex="-1">
+        <button class="archive-close" type="button" data-archive-close aria-label="关闭档案">×</button>
+        <p class="archive-panel__eyebrow">档案</p>
+        <h2 id="archive-dialog-title">档案</h2>
+        <div class="archive-panel__content"></div>
       </section>
     </div>
     <script type="module" src="./src/scripts/main.js"></script>

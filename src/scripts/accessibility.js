@@ -73,3 +73,58 @@ export function setupMobileNav(button, nav) {
     }
   });
 }
+
+export function setupArchiveDialog({ shell, entries }) {
+  if (!shell) return;
+  const panel = shell.querySelector(".archive-panel");
+  const title = shell.querySelector("#archive-dialog-title");
+  const content = shell.querySelector(".archive-panel__content");
+  const eyebrow = shell.querySelector(".archive-panel__eyebrow");
+  let previousFocus = null;
+
+  const close = () => {
+    if (shell.hidden) return;
+    shell.hidden = true;
+    document.body.style.overflow = "";
+    previousFocus?.focus();
+  };
+
+  const open = (id, trigger) => {
+    const entry = entries[id];
+    if (!entry) return;
+    previousFocus = trigger;
+    eyebrow.textContent = entry.eyebrow || "档案";
+    title.textContent = entry.title;
+    content.innerHTML = entry.body.map((line) => `<p>${line}</p>`).join("");
+    shell.hidden = false;
+    document.body.style.overflow = "hidden";
+    panel.focus();
+  };
+
+  document.addEventListener("click", (event) => {
+    const trigger = event.target.closest("[data-archive-trigger]");
+    if (trigger) open(trigger.dataset.archiveTrigger, trigger);
+  });
+
+  shell.querySelectorAll("[data-archive-close]").forEach((el) => el.addEventListener("click", close));
+
+  document.addEventListener("keydown", (event) => {
+    if (shell.hidden) return;
+    if (event.key === "Escape") {
+      close();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const focusables = shell.querySelectorAll("button, [href], [tabindex]:not([tabindex='-1'])");
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (!first || !last) return;
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+}
