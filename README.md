@@ -21,10 +21,26 @@ npm run capture
 - 图片焦点：`content.js` 的 `position` 字段，最终写入 `object-position`
 - 样式：`src/styles/`
 - 动画：`src/scripts/scroll-scenes.js`
+- 信封开场：`src/scripts/envelope-intro.js` 与 `src/styles/envelope-intro.css`
 
 ## 素材替换
 
 素材位于 `src/assets/`。保留目录和文件名后直接替换即可；图片加载失败会显示同位置占位，不会破坏页面结构。真实照片与 AI 情境图已在 `ASSET_MAP.md` 中区分。
+
+第二批素材已接入校园、普通生活、轨道交通和纪念空间章节。未使用素材及原因记录在 `ASSET_MAP.md`。
+
+## 信封开场
+
+默认从页面顶部进入时播放约 5 秒信封展开开场。支持：
+
+- 点击“跳过开场”
+- 按 `Esc`
+- `?intro=0`
+- `?capture=1`
+- 带章节 hash 的链接
+- 浏览器恢复到页面中部
+
+减弱动态模式会使用简化过渡，不影响正文阅读。
 
 ## GitHub Pages
 

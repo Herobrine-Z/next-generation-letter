@@ -1,10 +1,29 @@
 export function setupModal({ button, shell, content, sourceNotes }) {
   const panel = shell.querySelector(".source-modal");
   let previousFocus = null;
+  const link = (url, text) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
   content.innerHTML = `
-    ${sourceNotes.paragraphs.map((item) => `<p>${item}</p>`).join("")}
-    <h3>图片与许可入口</h3>
-    <ul>${sourceNotes.attribution.map((item) => `<li>${item}</li>`).join("")}</ul>
+    <h3>一、创作说明</h3>
+    ${sourceNotes.creative.map((item) => `<p>${item}</p>`).join("")}
+    <h3>二、历史资料来源</h3>
+    ${sourceNotes.history.map((item) => `<p>${item}</p>`).join("")}
+    <h3>三、图片与摄影许可</h3>
+    <table>
+      <thead><tr><th>文件</th><th>作者与来源</th><th>许可</th></tr></thead>
+      <tbody>
+        ${sourceNotes.images.map((item) => `
+          <tr>
+            <td>${item.file}</td>
+            <td>${item.author}<br>${link(item.sourceUrl, item.title)}<br>${item.modified}</td>
+            <td>${link(item.licenseUrl, item.license)}<br>访问：${item.accessed}</td>
+          </tr>
+        `).join("")}
+      </tbody>
+    </table>
+    <h3>四、AI 辅助画面</h3>
+    ${sourceNotes.ai.map((item) => `<p>${item}</p>`).join("")}
+    <h3>五、仍需人工确认</h3>
+    <ul>${sourceNotes.pending.map((item) => `<li>${item}</li>`).join("")}</ul>
   `;
 
   const close = () => {

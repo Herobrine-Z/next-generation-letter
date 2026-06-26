@@ -2,12 +2,16 @@ import "../styles/layout.css";
 import "../styles/components.css";
 import "../styles/sections.css";
 import "../styles/animations.css";
+import "../styles/envelope-intro.css";
 import "../styles/responsive.css";
 import { chapters, sourceNotes } from "./content.js";
 import { createImage, preloadCaptureImages } from "./asset-loader.js";
 import { createRedThread } from "./red-thread.js";
+import { renderMedia } from "./render-media.js";
+import { createOverlays } from "./overlays.js";
 import { setupScrollScenes, setupNavSpy } from "./scroll-scenes.js";
 import { setupModal, setupMobileNav } from "./accessibility.js";
+import { setupEnvelopeIntro } from "./envelope-intro.js";
 
 const params = new URLSearchParams(window.location.search);
 if (params.get("capture") === "1") {
@@ -15,60 +19,6 @@ if (params.get("capture") === "1") {
 }
 
 const story = document.querySelector(".story");
-
-function renderMedia(chapter, index) {
-  const primary = chapter.assets[0];
-  const support = chapter.assets.slice(1, 3);
-  const media = document.createElement("div");
-  media.className = "chapter-media visual-stack reveal";
-
-  if (chapter.id === "too-light") {
-    media.innerHTML = `
-      <div class="letter-paper">
-        <p data-typewriter="${chapter.letterDraft.join("\n")}"></p>
-        <p>可“<span class="strike-word" style="--strike-progress:0">很好</span>”两个字，怎么能够回答一生？</p>
-      </div>
-    `;
-    return media;
-  }
-
-  if (chapter.id === "ending") {
-    media.className = "chapter-media final-letter reveal";
-    const letter = document.createElement("div");
-    letter.className = "letter-paper";
-    letter.innerHTML = chapter.letter.map((line) => `<p>${line}</p>`).join("");
-    const block = document.createElement("div");
-    block.className = "source-block";
-    block.innerHTML = `<strong>创作说明</strong><br>${sourceNotes.paragraphs.join("<br>")}`;
-    letter.append(block);
-    media.append(letter);
-    return media;
-  }
-
-  if (primary) {
-    const frame = document.createElement("figure");
-    frame.className = "film-frame";
-    frame.style.setProperty("--asset-position", primary.position || "center");
-    frame.append(createImage(primary, index < 2));
-    frame.insertAdjacentHTML("beforeend", `<figcaption class="sr-only">${primary.alt || ""}</figcaption>`);
-    media.append(frame);
-  }
-
-  support.forEach((asset) => {
-    if (asset.role === "overlay") return;
-    const frame = document.createElement("figure");
-    frame.className = asset.role === "paper" ? "note-card" : "film-frame";
-    frame.style.setProperty("--asset-position", asset.position || "center");
-    if (asset.role === "paper") {
-      frame.innerHTML = `<small>情境画面</small><p>${asset.alt}</p>`;
-    } else {
-      frame.append(createImage(asset));
-    }
-    media.append(frame);
-  });
-
-  return media;
-}
 
 function renderChapter(chapter, index) {
   const section = document.createElement("section");
@@ -85,6 +35,8 @@ function renderChapter(chapter, index) {
     bg.append(createImage(hero, index === 0));
     section.append(bg);
   }
+  const overlays = createOverlays(chapter);
+  if (overlays) section.append(overlays);
 
   section.insertAdjacentHTML("beforeend", `<div class="grain" aria-hidden="true"></div>`);
   if (index === 0) {
@@ -108,7 +60,9 @@ function renderChapter(chapter, index) {
     chapter.quote ? `<blockquote>${chapter.quote}</blockquote>` : "",
     chapter.id === "three-days" ? `<div class="date-mark">1949.11.27</div>` : "",
     chapter.paragraphs.map((text) => `<p>${text}</p>`).join(""),
-    `<div class="archive-card"><small>说明</small>${chapter.archiveNotes.map((note) => `<p>${note}</p>`).join("")}<p>${chapter.aiDisclosure}</p></div>`
+    chapter.noteType === "archive"
+      ? `<div class="archive-card"><small>档案说明</small>${chapter.archiveNotes.map((note) => `<p>${note}</p>`).join("")}<p>${chapter.aiDisclosure}</p></div>`
+      : `<p class="source-note">${chapter.archiveNotes[0] || chapter.aiDisclosure}</p>`
   ].join("");
   copy.innerHTML = body;
 
@@ -139,5 +93,6 @@ setupModal({
   sourceNotes
 });
 preloadCaptureImages(story);
+setupEnvelopeIntro();
 setupScrollScenes();
 setupNavSpy(chapters);

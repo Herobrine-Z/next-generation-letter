@@ -22,13 +22,15 @@ export function setupScrollScenes() {
     {
       reduceMotion: "(prefers-reduced-motion: reduce)",
       isDesktop: "(min-width: 1025px)",
-      isMobile: "(max-width: 1024px)"
+      isMobile: "(max-width: 1024px)",
+      isSmallMobile: "(max-width: 640px)"
     },
     (context) => {
-      const { reduceMotion, isDesktop } = context.conditions;
+      const { reduceMotion, isDesktop, isSmallMobile } = context.conditions;
       if (reduceMotion) {
         gsap.set(".reveal", { autoAlpha: 1, y: 0 });
         gsap.set(".thread-path", { strokeDashoffset: 0 });
+        gsap.set(".strike-word", { "--strike-progress": 1 });
         return;
       }
 
@@ -45,18 +47,20 @@ export function setupScrollScenes() {
         });
       });
 
-      gsap.utils.toArray(".asset-bg img").forEach((img) => {
-        gsap.fromTo(img, { scale: 1.08 }, {
-          scale: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: img.closest(".chapter-section"),
-            start: "top bottom",
-            end: "bottom top",
-            scrub: isDesktop ? 1.2 : 0.4
-          }
+      if (!isSmallMobile) {
+        gsap.utils.toArray(".asset-bg img").forEach((img) => {
+          gsap.fromTo(img, { scale: 1.08 }, {
+            scale: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: img.closest(".chapter-section"),
+              start: "top bottom",
+              end: "bottom top",
+              scrub: isDesktop ? 1.2 : 0.4
+            }
+          });
         });
-      });
+      }
 
       const path = document.querySelector(".thread-path");
       if (path) {
@@ -74,15 +78,7 @@ export function setupScrollScenes() {
         });
       }
 
-      gsap.to(".strike-word", {
-        "--strike-progress": 1,
-        scrollTrigger: {
-          trigger: ".strike-word",
-          start: "top 76%",
-          toggleActions: "play none none reset"
-        },
-        duration: 0.9
-      });
+      gsap.set(".strike-word", { "--strike-progress": 0 });
 
       gsap.utils.toArray(".film-frame").forEach((frame, index) => {
         gsap.from(frame, {
@@ -97,6 +93,39 @@ export function setupScrollScenes() {
         });
       });
 
+      if (!isSmallMobile) {
+        gsap.to(".chapter-overlay--steam", {
+          yPercent: -3,
+          ease: "sine.inOut",
+          scrollTrigger: {
+            trigger: ".ordinary",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.4
+          }
+        });
+        gsap.to(".chapter-overlay--fog", {
+          xPercent: 2,
+          ease: "sine.inOut",
+          scrollTrigger: {
+            trigger: ".ordinary",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.6
+          }
+        });
+        gsap.to(".chapter-overlay--plum", {
+          yPercent: 4,
+          ease: "sine.inOut",
+          scrollTrigger: {
+            trigger: ".remembrance",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.8
+          }
+        });
+      }
+
       return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     }
   );
@@ -107,7 +136,9 @@ export function setupScrollScenes() {
       trigger: typeTarget,
       start: "top 75%",
       once: true,
-      onEnter: () => typewriter(typeTarget, typeTarget.dataset.typewriter)
+      onEnter: () => typewriter(typeTarget, typeTarget.dataset.typewriter).then(() => {
+        gsap.to(".strike-word", { "--strike-progress": 1, duration: 0.9, ease: "power2.out" });
+      })
     });
   }
 

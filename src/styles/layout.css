@@ -91,15 +91,15 @@ body {
   min-height: calc(var(--section-height) - 220px);
 }
 
-.chapter-section:nth-child(even) .chapter-section__inner {
+.chapter-section:nth-of-type(even) .chapter-section__inner {
   grid-template-columns: minmax(320px, 0.7fr) minmax(0, 0.88fr);
 }
 
-.chapter-section:nth-child(even) .chapter-copy {
+.chapter-section:nth-of-type(even) .chapter-copy {
   order: 2;
 }
 
-.chapter-section:nth-child(even) .chapter-media {
+.chapter-section:nth-of-type(even) .chapter-media {
   order: 1;
 }
 
@@ -180,6 +180,21 @@ h2,
   background:
     linear-gradient(90deg, rgba(9, 10, 11, 0.72), rgba(9, 10, 11, 0.22) 45%, rgba(9, 10, 11, 0.68)),
     linear-gradient(180deg, rgba(9, 10, 11, 0.24), rgba(9, 10, 11, 0.58));
+}
+
+.morning .asset-bg::after,
+.ordinary .asset-bg::after,
+.future-dawn .asset-bg::after {
+  background:
+    linear-gradient(90deg, rgba(241, 231, 210, 0.62), rgba(241, 231, 210, 0.16) 46%, rgba(241, 231, 210, 0.52)),
+    linear-gradient(180deg, rgba(40, 52, 59, 0.14), rgba(40, 52, 59, 0.28));
+}
+
+.transition-blue .asset-bg::after,
+.ending .asset-bg::after {
+  background:
+    linear-gradient(90deg, rgba(9, 10, 11, 0.55), rgba(9, 10, 11, 0.12) 48%, rgba(9, 10, 11, 0.5)),
+    linear-gradient(180deg, rgba(40, 52, 59, 0.18), rgba(225, 185, 104, 0.2));
 }
 
 .chapter-media {

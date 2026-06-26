@@ -1,22 +1,38 @@
 export const sourceNotes = {
-  title: "创作与资料边界",
-  paragraphs: [
-    "《把牢底坐穿》是何敬平在狱中创作的诗作，并非写给当代青年的真实书信。本页面采用“来信/回信”的艺术化叙事形式。",
-    "部分问答文字为创作者依据历史资料进行的当代化叙事转述，并非历史人物原话。",
-    "AI 辅助画面仅用于象征性场景和转场，不作为历史影像资料。真实历史或城市照片保留来源署名入口。",
-    "本作品避免生成英烈正面肖像、伪造历史档案、伪造亲笔信，不使用影视剧画面冒充历史资料。"
+  title: "资料说明",
+  creative: [
+    "《把牢底坐穿》是何敬平在狱中创作的诗作，并非写给当代青年的真实书信。本页面采用“来信/回信”的艺术化叙事结构。",
+    "页面中的当代提问、回信和旁白为创作者依据历史资料进行的当代化叙事转述，并非历史人物原话。",
+    "AI 辅助画面仅用于象征性场景、转场和视觉氛围，不作为历史影像资料。"
   ],
-  attribution: [
-    "H01/H03：Fanghong，CC BY 2.5，Wikimedia Commons。",
-    "H02/H04：Yumeto，CC BY-SA 4.0，Wikimedia Commons。",
-    "H05：Zhou Guanhuai，CC BY-SA 4.0，Wikimedia Commons。",
-    "E01/E03：Jason_she，CC BY-SA 3.0，Wikimedia Commons。",
-    "E02：Xiang Xinyu，CC BY-SA 4.0，Wikimedia Commons。",
-    "L01：Gisling / 唐戈，CC BY-SA 3.0，Wikimedia Commons。",
-    "F01：Serratedtrout，CC BY-SA 4.0，Wikimedia Commons。",
-    "F02：Daniel Lu，CC BY-SA 4.0，Wikimedia Commons。",
-    "F03：Graeme Bray，CC BY 3.0，Wikimedia Commons。",
-    "F04：Harvey Barrison，CC BY-SA 2.0，Wikimedia Commons。"
+  history: [
+    "何敬平与《把牢底坐穿》相关史料、1949 年 11 月 27 日相关史实、渣滓洞、白公馆、歌乐山旧址资料仍建议在正式发布前由创作者回到权威馆方或出版物逐条复核。",
+    "现代旧址照片只能作为今天的旧址记录，不得加工后标注为 1949 年真实影像。"
+  ],
+  images: [
+    { file: "H01_Zhazidong_Exterior_2006.jpg", title: "ChongqingZhazidong", author: "Fanghong", sourceUrl: "https://commons.wikimedia.org/wiki/File:ChongqingZhazidong.jpg", license: "CC BY 2.5", licenseUrl: "https://creativecommons.org/licenses/by/2.5/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "H05_Geleshan_Martyrs_Mausoleum.jpg", title: "Chongqing Geleshan Martyr's Mausoleum", author: "Zhou Guanhuai", sourceUrl: "https://commons.wikimedia.org/wiki/File:Chongqing_Geleshan_Martyr%27s_Mausoleum.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "H06_Geleshan_Martyrs_Cemetery_Sculpture.jpg", title: "ChongqingMartyrsCemetery", author: "Fanghong", sourceUrl: "https://commons.wikimedia.org/wiki/File:ChongqingMartyrsCemetery.jpg", license: "CC BY 2.5", licenseUrl: "https://creativecommons.org/licenses/by/2.5/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "H08_Geleshan_Cemetery_Square_2018.jpg", title: "歌乐山陵园 5107", author: "Anheizhe", sourceUrl: "https://commons.wikimedia.org/wiki/File:歌乐山陵园_5107.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "E02_University_Morning.jpg", title: "Morgen der Universität", author: "Jiang Xinyu", sourceUrl: "https://commons.wikimedia.org/wiki/File:Morgen_der_Universit%C3%A4t_.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "E04_CQU_First_Teaching_Building.jpg", title: "1st teaching building scene", author: "jason_she", sourceUrl: "https://commons.wikimedia.org/wiki/File:1st_teaching_buding_scen_-_panoramio.jpg", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "E05_CQU_Canteen.jpg", title: "Canteen", author: "jason_she", sourceUrl: "https://commons.wikimedia.org/wiki/File:Canteen_-_panoramio.jpg", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "E07_CQU_Old_Library.jpg", title: "重庆大学老图书馆", author: "苏适", sourceUrl: "https://commons.wikimedia.org/wiki/File:重庆大学老图书馆.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "E09_CQU_Student_Dormitory_No1.jpg", title: "重庆大学学生一舍", author: "Wasale", sourceUrl: "https://commons.wikimedia.org/wiki/File:重庆大学学生一舍.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "L01_Chongqing_Snack_Shop.jpg", title: "Chongqing snack", author: "Gisling / 唐戈", sourceUrl: "https://commons.wikimedia.org/wiki/File:Chongqing_snack.jpg", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "L03_Chongqing_Traditional_Market_Street.jpg", title: "Chongqing China Traditional Market 2 November 2010", author: "杨志强 / Zhiqiang", sourceUrl: "https://commons.wikimedia.org/wiki/File:Chongqing_China_Traditional_Market_2_November_2010.jpg", license: "CC BY-SA 2.5", licenseUrl: "https://creativecommons.org/licenses/by-sa/2.5/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "L04_Yangtze_Kite_Seller.jpg", title: "The Kite seller", author: "Oncewerecolours", sourceUrl: "https://commons.wikimedia.org/wiki/File:The_Kite_seller.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "F05_Chongqing_Monorail_Station.jpg", title: "Chq Monorail1 PB091193", author: "Bernd.Brincken", sourceUrl: "https://commons.wikimedia.org/wiki/File:Chq_Monorail1_PB091193.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "F08_CQU_Electrical_Engineering_Building.jpg", title: "重庆大学电气工程学院楼", author: "苏适", sourceUrl: "https://commons.wikimedia.org/wiki/File:重庆大学电气工程学院楼.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" },
+    { file: "F10_Shazhengjie_Station_CQU.jpg", title: "Exit 1 of Shazhengjie Station Loop Line", author: "Junyi Lou", sourceUrl: "https://commons.wikimedia.org/wiki/File:Exit_1_of_Shazhengjie_Station_Loop_Line.jpg", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/", modified: "裁切、低饱和与统一调色", accessed: "2026-06-26" }
+  ],
+  ai: [
+    "AI_Cover_DarkLetter.webp、AI_WindowLight.webp、AI_BlankPrisonPaper.webp、AI_FireShadowWall.webp、AI_ModernDeskNight.webp、AI_BarsToBridge.webp、AI_RedLineCity.webp、AI_ClassroomLight.webp、AI_MechanicalDawn.webp、AI_UnfoldedLetter.webp、AI_FinalDawn.webp 均为 AI 辅助情境化创作。",
+    "Overlay_BurntEdge.png、Overlay_WarmSteam.png、Overlay_RainFog.png、Overlay_RedPlum.png 为透明叠加素材。"
+  ],
+  pending: [
+    "第二批素材包中的 xlsx 总表包含逐图原始文件页；本弹窗已列出选用素材的许可信息，但 H06/H08/E04/E05/E07/L03/L04/F05/F08/F10 的原始文件页建议发布前由人工回到 xlsx 再次核对。",
+    "第三章真实写信手部、划掉“很好”的原创实拍素材仍缺失，本版继续使用 AI 写信桌面并做明确标注。"
   ]
 };
 
@@ -40,7 +56,8 @@ export const chapters = [
       { src: "00_Cover/AI_Cover_DarkLetter.webp", alt: "黑暗中浮现的空白旧信纸", role: "hero", position: "center 42%", ai: true },
       { src: "00_Cover/AI_WindowLight.webp", alt: "铁窗投下的微弱光线", role: "support", position: "center center", ai: true }
     ],
-    archiveNotes: ["封面情境图为 AI 辅助创作，不作为历史影像资料。"],
+    noteType: "small",
+    archiveNotes: ["AI 辅助情境化创作，不作为历史影像资料。"],
     aiDisclosure: "本画面为 AI 辅助情境化创作。"
   },
   {
@@ -61,6 +78,7 @@ export const chapters = [
       { src: "01_History_Archive_Real/H01_Zhazidong_Exterior_2006.jpg", alt: "渣滓洞外景资料照片", role: "archive", position: "center center", real: true },
       { src: "01_History_Archive/AI_BlankPrisonPaper.webp", alt: "旧纸与短铅笔的象征画面", role: "paper", position: "center center", ai: true }
     ],
+    noteType: "archive",
     archiveNotes: ["《把牢底坐穿》是诗作，并非写给当代青年的真实书信。", "真实照片仅作小幅档案影像使用。"],
     aiDisclosure: "空白旧纸为 AI 辅助情境化创作。"
   },
@@ -80,8 +98,10 @@ export const chapters = [
     ],
     assets: [
       { src: "01_History_Archive/AI_FireShadowWall.webp", alt: "火光映照的墙面与紧闭木门", role: "hero", position: "center 48%", ai: true },
-      { src: "01_History_Archive/Overlay_BurntEdge.png", alt: "", role: "overlay", position: "center center", decorative: true, ai: true }
+      { src: "01_History_Archive_Real/H08_Geleshan_Cemetery_Square_2018.jpg", alt: "歌乐山烈士陵园广场资料照片", role: "archive", position: "center 46%", real: true },
+      { src: "01_History_Archive/Overlay_BurntEdge.png", alt: "", role: "overlay", overlayType: "burnt", position: "center center", decorative: true, ai: true }
     ],
+    noteType: "small",
     archiveNotes: ["本章采用象征性火光和纸边，不展示血腥场面。"],
     aiDisclosure: "火光墙影为 AI 辅助情境化创作。"
   },
@@ -100,9 +120,11 @@ export const chapters = [
       "于是我把这句太轻的回答划掉，带着那句“下一代”，走进今天的重庆。"
     ],
     assets: [
-      { src: "02_Student_Letter/AI_ModernDeskNight.webp", alt: "现代自习室夜晚写信桌面", role: "hero", position: "center center", ai: true }
+      { src: "02_Student_Letter/AI_ModernDeskNight.webp", alt: "现代自习室夜晚写信桌面", role: "hero", position: "center center", ai: true },
+      { src: "04_Education_Real/E09_CQU_Student_Dormitory_No1.jpg", alt: "重庆大学学生宿舍资料照片，作为当代青年生活环境备选", role: "archive", position: "center center", optional: true }
     ],
-    archiveNotes: ["本章回信文字为当代叙事创作。"],
+    noteType: "small",
+    archiveNotes: ["本章回信文字为当代叙事创作；真实写信手部素材仍待原创补拍。"],
     aiDisclosure: "写信桌面为 AI 辅助情境化创作。"
   },
   {
@@ -120,8 +142,10 @@ export const chapters = [
     ],
     assets: [
       { src: "03_Transition/AI_BarsToBridge.webp", alt: "铁窗到桥索与轨道的转场画面", role: "hero", position: "center center", ai: true },
-      { src: "03_Transition/AI_RedLineCity.webp", alt: "暗红线形成山城交通脉络", role: "overlay", position: "center center", ai: true }
+      { src: "06_Future_Real/F10_Shazhengjie_Station_CQU.jpg", alt: "沙正街站与重庆大学资料照片", role: "wide", position: "center 44%", real: true },
+      { src: "03_Transition/AI_RedLineCity.webp", alt: "", role: "overlay", overlayType: "red-line", position: "center center", decorative: true, ai: true }
     ],
+    noteType: "small",
     archiveNotes: ["本章为象征性转场，不对应具体历史档案。"],
     aiDisclosure: "转场图为 AI 辅助情境化创作。"
   },
@@ -135,16 +159,19 @@ export const chapters = [
     eyebrow: "你们曾担心的孩子，今天能够读书吗？",
     headline: "第一封回信：我们有书读",
     paragraphs: [
-      "今天，知识不再是少数人的特权。",
+      "今天，越来越多青年可以走进课堂、图书馆和实验室，用知识认识世界，也选择自己的未来。",
       "我们可以坐在明亮的教室里，读自己选择的书，研究尚未解决的问题，也可以大胆想象一个还不存在的未来。",
       "你们说的“下一代”，已经能够用自己的眼睛认识世界。"
     ],
     assets: [
       { src: "04_Education_Real/E02_University_Morning.jpg", alt: "重庆大学校园晨光资料照片", role: "hero", position: "center 45%", real: true },
       { src: "04_Education/AI_ClassroomLight.webp", alt: "晨光照进空教室与书页", role: "paper", position: "center center", ai: true },
-      { src: "04_Education_Real/E03_Huxi_Campus_Hill_Path.jpg", alt: "虎溪校区山间道路资料照片", role: "archive", position: "center center", real: true }
+      { src: "04_Education_Real/E07_CQU_Old_Library.jpg", alt: "重庆大学旧图书馆资料照片", role: "archive", position: "center 48%", real: true },
+      { src: "04_Education_Real/E04_CQU_First_Teaching_Building.jpg", alt: "重庆大学第一教学楼资料照片", role: "support", position: "center 42%", real: true },
+      { src: "04_Education_Real/E05_CQU_Canteen.jpg", alt: "重庆大学食堂资料照片，补充校园生活细节", role: "support", position: "center 48%", real: true }
     ],
-    archiveNotes: ["校园照片来自开放许可素材，页面进行了低饱和统一调色。"],
+    noteType: "small",
+    archiveNotes: ["资料照片已进行裁切与统一调色。"],
     aiDisclosure: "教室晨光为 AI 辅助情境化创作。"
   },
   {
@@ -163,9 +190,12 @@ export const chapters = [
     ],
     assets: [
       { src: "05_OrdinaryLife_Real/L01_Chongqing_Snack_Shop.jpg", alt: "重庆街边小吃店资料照片", role: "hero", position: "center 55%", real: true },
-      { src: "05_OrdinaryLife/Overlay_WarmSteam.png", alt: "", role: "overlay", decorative: true, ai: true },
-      { src: "05_OrdinaryLife/Overlay_RainFog.png", alt: "", role: "overlay", decorative: true, ai: true }
+      { src: "05_OrdinaryLife_Real/L03_Chongqing_Traditional_Market_Street.jpg", alt: "重庆传统市场街道资料照片", role: "archive", position: "center 48%", real: true },
+      { src: "05_OrdinaryLife_Real/L04_Yangtze_Kite_Seller.jpg", alt: "长江边风筝售卖者资料照片", role: "support", position: "center 48%", real: true },
+      { src: "05_OrdinaryLife/Overlay_WarmSteam.png", alt: "", role: "overlay", overlayType: "steam", decorative: true, ai: true },
+      { src: "05_OrdinaryLife/Overlay_RainFog.png", alt: "", role: "overlay", overlayType: "fog", decorative: true, ai: true }
     ],
+    noteType: "small",
     archiveNotes: ["生活素材用于表现普通人的日常，不作为城市旅游宣传图。"],
     aiDisclosure: "蒸汽与雨雾为透明叠加素材。"
   },
@@ -180,13 +210,15 @@ export const chapters = [
     headline: "第三封回信：我们有梦可以追",
     paragraphs: [
       "你们曾经等待一个新的中国。",
-      "今天的我们，正在学习怎样制造机器、建造桥梁，设计程序、治疗疾病、探索星空。",
+      "今天的我们，正在学习制造机器、建造桥梁、设计程序、治疗疾病，也把目光投向更远的星空。",
       "我们不必再等待别人决定未来。我们可以亲手参与它的建造。"
     ],
     assets: [
       { src: "06_Future/AI_MechanicalDawn.webp", alt: "机械、桥梁和实验仪器与黎明的象征画面", role: "hero", position: "center center", ai: true },
-      { src: "06_Future_Real/F02_Chaotianmen_Bridge_Fog_2026.jpg", alt: "重庆桥梁与江面雾色资料照片", role: "wide", position: "center center", real: true }
+      { src: "06_Future_Real/F05_Chongqing_Monorail_Station.jpg", alt: "重庆单轨站台资料照片", role: "wide", position: "center center", real: true },
+      { src: "06_Future_Real/F08_CQU_Electrical_Engineering_Building.jpg", alt: "重庆大学电气工程楼资料照片", role: "archive", position: "center 48%", real: true }
     ],
+    noteType: "small",
     archiveNotes: ["本章保留真实金属、桥梁和晨光质感，避免科幻化界面。"],
     aiDisclosure: "机械晨光为 AI 辅助情境化创作。"
   },
@@ -206,8 +238,10 @@ export const chapters = [
     ],
     assets: [
       { src: "01_History_Archive_Real/H05_Geleshan_Martyrs_Mausoleum.jpg", alt: "歌乐山烈士陵园资料照片", role: "hero", position: "center 45%", real: true },
-      { src: "07_Remembrance/Overlay_RedPlum.png", alt: "", role: "overlay", decorative: true, ai: true }
+      { src: "01_History_Archive_Real/H06_Geleshan_Martyrs_Cemetery_Sculpture.jpg", alt: "歌乐山烈士陵园雕塑资料照片", role: "archive", position: "center 48%", real: true },
+      { src: "07_Remembrance/Overlay_RedPlum.png", alt: "", role: "overlay", overlayType: "plum", decorative: true, ai: true }
     ],
+    noteType: "small",
     archiveNotes: ["纪念场景采用留白和背影式叙事，不做表演式悲情。"],
     aiDisclosure: "红梅叠加为 AI 辅助画面。"
   },
@@ -234,9 +268,10 @@ export const chapters = [
       "记录时代脉搏，激扬青年声音。"
     ],
     assets: [
-      { src: "08_Ending/AI_UnfoldedLetter.webp", alt: "晨光中展开的长信纸", role: "paper", position: "center center", ai: true },
-      { src: "08_Ending/AI_FinalDawn.webp", alt: "重庆山城江面与黎明的象征画面", role: "hero", position: "center 48%", ai: true }
+      { src: "08_Ending/AI_FinalDawn.webp", alt: "重庆山城江面与黎明的象征画面", role: "hero", position: "center 48%", ai: true },
+      { src: "08_Ending/AI_UnfoldedLetter.webp", alt: "晨光中展开的长信纸", role: "paper", position: "center center", ai: true }
     ],
+    noteType: "small",
     archiveNotes: ["资料说明、图片来源和 AI 标注均压入尾章内部。"],
     aiDisclosure: "尾章画面为 AI 辅助情境化创作。"
   }

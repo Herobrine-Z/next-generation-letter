@@ -131,6 +131,75 @@
   filter: saturate(0.72) contrast(0.98);
 }
 
+.film-frame--wide img {
+  aspect-ratio: 16 / 9;
+}
+
+.paper-frame {
+  position: relative;
+  padding: 12px;
+  border: 1px solid rgba(122, 31, 36, 0.24);
+  background: rgba(241, 231, 210, 0.26);
+  box-shadow: 0 20px 64px rgba(0, 0, 0, 0.26);
+}
+
+.paper-frame img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: var(--asset-position, center);
+  filter: saturate(0.84) contrast(0.98);
+}
+
+.chapter-overlays {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.chapter-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--asset-position, center);
+  opacity: 0.26;
+}
+
+.chapter-overlay--burnt {
+  opacity: 0.34;
+  mix-blend-mode: multiply;
+  filter: saturate(0.75);
+}
+
+.chapter-overlay--red-line {
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+}
+
+.chapter-overlay--steam {
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  transform: translateY(4%);
+}
+
+.chapter-overlay--fog {
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  transform: translateX(-2%);
+}
+
+.chapter-overlay--plum {
+  opacity: 0.2;
+  object-fit: contain;
+  object-position: right 18% bottom 18%;
+  transform: scale(0.7);
+  transform-origin: right bottom;
+}
+
 .archive-card,
 .note-card {
   border: 1px solid rgba(122, 31, 36, 0.54);
@@ -162,6 +231,36 @@
   transform: rotate(-1deg);
 }
 
+.letter-paper--draft [data-typewriter] {
+  min-height: 6.5em;
+  white-space: pre-line;
+}
+
+.letter-paper--final {
+  overflow: hidden;
+  background:
+    linear-gradient(100deg, rgba(255, 255, 255, 0.45), transparent 34%),
+    linear-gradient(rgba(241, 231, 210, 0.68), rgba(241, 231, 210, 0.72)),
+    var(--paper-image),
+    var(--paper-light);
+  background-size: cover;
+  background-position: center;
+  transform: rotate(0.6deg);
+}
+
+.letter-paper--final::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 15%, rgba(225, 185, 104, 0.16), transparent 42%);
+}
+
+.letter-paper--final p {
+  position: relative;
+  z-index: 1;
+}
+
 .letter-paper p {
   font-family: var(--letter);
   font-size: clamp(22px, 2vw, 31px);
@@ -189,13 +288,29 @@
 .source-button {
   position: fixed;
   right: 24px;
-  bottom: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom));
   z-index: 28;
   padding: 8px 12px;
   border: 1px solid rgba(225, 185, 104, 0.4);
   background: rgba(9, 10, 11, 0.62);
   color: var(--muted-light);
   font-size: 13px;
+}
+
+.source-note {
+  margin-top: 30px !important;
+  color: rgba(238, 232, 220, 0.58);
+  font-size: clamp(13px, 1vw, 15px) !important;
+  line-height: 1.7 !important;
+  border-left: 1px solid rgba(181, 34, 43, 0.5);
+  padding-left: 14px;
+}
+
+.morning .source-note,
+.ordinary .source-note,
+.future-dawn .source-note,
+.ending .source-note {
+  color: rgba(34, 35, 33, 0.58);
 }
 
 .modal-shell {
@@ -229,9 +344,33 @@
 }
 
 .source-modal p,
-.source-modal li {
+.source-modal li,
+.source-modal td,
+.source-modal th {
   font-size: 15px;
   line-height: 1.7;
+}
+
+.source-modal h3 {
+  margin: 24px 0 10px;
+  font-family: var(--serif);
+}
+
+.source-modal table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.source-modal th,
+.source-modal td {
+  vertical-align: top;
+  border-top: 1px solid rgba(122, 31, 36, 0.22);
+  padding: 8px 6px;
+  text-align: left;
+}
+
+.source-modal a {
+  color: var(--dark-red);
 }
 
 .modal-close {
