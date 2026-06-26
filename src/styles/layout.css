@@ -9,6 +9,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
 .skip-link {
   position: fixed;
   left: 16px;

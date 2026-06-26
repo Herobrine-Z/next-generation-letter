@@ -1,3 +1,51 @@
+@font-face {
+  font-family: "Story Serif";
+  src: url("../assets/fonts/NotoSerifSC-SemiBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Story Serif";
+  src: url("../assets/fonts/NotoSerifSC-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Story Sans";
+  src: url("../assets/fonts/NotoSansSC-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Story Sans";
+  src: url("../assets/fonts/NotoSansSC-Medium.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Story Sans";
+  src: url("../assets/fonts/NotoSansSC-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Letter Hand";
+  src: url("../assets/fonts/LXGWWenKai-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --coal-black: #101112;
   --deep-black: #090a0b;
@@ -13,9 +61,9 @@
   --text-light: #eee8dc;
   --text-dark: #222321;
   --muted-light: rgba(238, 232, 220, 0.68);
-  --serif: "Source Han Serif SC", "Noto Serif SC", "Songti SC", "STSong", serif;
-  --sans: "HarmonyOS Sans SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --letter: "LXGW WenKai", "KaiTi", "STKaiti", serif;
+  --serif: "Story Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
+  --sans: "Story Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --letter: "Letter Hand", "LXGW WenKai", "Kaiti SC", "KaiTi", "STKaiti", serif;
   --page-width: 1440px;
   --section-00-height: 2600px;
   --section-01-height: 3200px;
