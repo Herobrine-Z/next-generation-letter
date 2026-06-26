@@ -4,7 +4,7 @@ import "../styles/sections.css";
 import "../styles/animations.css";
 import "../styles/envelope-intro.css";
 import "../styles/responsive.css";
-import { chapters, sourceNotes } from "./content.js";
+import { chapters, heJingpingArchive, heJingpingMediaSlots, sourceNotes } from "./content.js";
 import { createImage, preloadCaptureImages } from "./asset-loader.js";
 import { createRedThread } from "./red-thread.js";
 import { renderMedia } from "./render-media.js";
@@ -127,33 +127,26 @@ setupModal({
   button: document.querySelector(".source-button"),
   shell: document.querySelector(".modal-shell"),
   content: document.querySelector(".source-modal__content"),
-  sourceNotes
+  sourceNotes,
+  mediaSlots: heJingpingMediaSlots
 });
 setupArchiveDialog({
   shell: document.querySelector(".archive-shell"),
   entries: {
-    "archive-he-jingping": {
-      eyebrow: "档案 01",
-      title: "何敬平与《把牢底坐穿》",
-      body: [
-        "何敬平，重庆巴南木洞人，1918-1949。",
-        "1948 年夏，于渣滓洞创作《把牢底坐穿》。",
-        "本页相关史实依据红岩革命历史博物馆等公开资料复核；当代回信文字为艺术化叙事转译，并非历史人物原话。"
-      ]
-    }
-  }
+    "archive-he-jingping": heJingpingArchive
+  },
+  mediaSlots: heJingpingMediaSlots
 });
 preloadCaptureImages(story);
 
-const audio = setupAudioController(document.querySelector(".audio-toggle"));
+const audio = setupAudioController(document.querySelector(".audio-player"));
 let storyInitialized = false;
 function enterStory(event) {
   if (storyInitialized) return;
   storyInitialized = true;
-  audio.startCityAmbient();
   setupScrollScenes();
   setupNavSpy(chapters);
-  setupChapterProgress(chapters);
+  setupChapterProgress(chapters, audio);
   requestAnimationFrame(() => refreshScrollScenes(true));
   window.setTimeout(() => story.focus({ preventScroll: true }), 0);
 }

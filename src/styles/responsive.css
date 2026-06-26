@@ -74,9 +74,8 @@
     bottom: calc(14px + env(safe-area-inset-bottom));
   }
 
-  .audio-toggle {
-    right: 74px;
-    bottom: calc(14px + env(safe-area-inset-bottom));
+  .audio-player {
+    --edge-control-size: 50px;
   }
 
   .archive-panel {
@@ -84,7 +83,7 @@
     right: 0;
     bottom: 0;
     width: auto;
-    max-height: min(76vh, 680px);
+    max-height: min(82dvh, 680px);
     padding:
       28px
       max(20px, env(safe-area-inset-right))
@@ -205,5 +204,15 @@
   .source-button {
     font-size: 12px;
     padding: 7px 10px;
+  }
+
+  .archive-fields,
+  .archive-media-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-close {
+    right: max(10px, env(safe-area-inset-right));
+    top: max(8px, env(safe-area-inset-top));
   }
 }

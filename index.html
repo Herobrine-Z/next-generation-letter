@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
-      content="《下一代，来信了》：2026 重庆青年写给红岩先辈的一封回信。"
+      content="《下一代，来信了》：2026 重庆青年写给红岩英烈的一封回信。"
     />
+    <meta name="theme-color" content="#090a0b" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="下一代，来信了" />
+    <meta property="og:description" content="2026 重庆青年写给红岩英烈的一封回信" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- share-cover.jpg 待取得正式封面后再补充 og:image / twitter:image，避免引用不存在文件。 -->
     <title>下一代，来信了</title>
     <link rel="preload" as="image" href="./src/assets/00_Cover/AI_Cover_DarkLetter.webp" />
     <link rel="preload" as="font" type="font/woff2" href="./src/assets/fonts/NotoSerifSC-SemiBold.woff2" crossorigin />
@@ -19,6 +25,12 @@
         .js-only { display: none !important; }
         .reveal { opacity: 1 !important; transform: none !important; }
       </style>
+      <section class="noscript-fallback">
+        <h1>下一代，来信了</h1>
+        <p>2026 重庆青年写给红岩英烈的一封回信。</p>
+        <p>请开启 JavaScript，以查看信封开场、滚动叙事、资料弹窗与音频交互。</p>
+        <blockquote>为了免除下一代的苦难，我们愿——愿把这牢底坐穿。</blockquote>
+      </section>
     </noscript>
     <div class="envelope-intro js-only" data-envelope-intro data-state="idle" role="dialog" aria-label="信封开场动画">
       <div class="envelope-intro__scene" aria-hidden="true"><img alt="" /></div>
@@ -62,7 +74,7 @@
       </div>
     </div>
     <header class="site-header" aria-label="作品标题">
-      <p>2026 重庆青年写给红岩先辈的一封回信</p>
+      <p>2026 重庆青年写给红岩英烈的一封回信</p>
     </header>
     <nav class="chapter-nav js-only" aria-label="章节导航"></nav>
     <aside class="chapter-progress js-only" data-chapter-progress aria-label="阅读进度">
@@ -77,7 +89,20 @@
     </button>
     <div id="mobile-nav" class="mobile-nav js-only" hidden></div>
     <main id="story" class="story" aria-label="下一代，来信了叙事长页" tabindex="-1"></main>
-    <button class="audio-toggle js-only" type="button" aria-pressed="false" hidden>静音</button>
+    <button
+      class="audio-player audio-toggle js-only"
+      type="button"
+      aria-pressed="false"
+      aria-label="播放背景音乐"
+      title="播放背景音乐"
+      hidden
+    >
+      <span class="audio-player__disc" aria-hidden="true">
+        <span class="audio-player__label"></span>
+        <span class="audio-player__hole"></span>
+      </span>
+      <span class="sr-only audio-player__status">背景音乐已暂停</span>
+    </button>
     <button class="source-button" type="button" aria-haspopup="dialog">资料来源</button>
     <div class="modal-shell" role="dialog" aria-modal="true" aria-labelledby="source-title" hidden>
       <div class="modal-backdrop" data-close></div>

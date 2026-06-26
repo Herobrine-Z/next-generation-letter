@@ -1,7 +1,7 @@
 export const sourceNotes = {
   title: "资料来源",
   creative: [
-    "《下一代，来信了》采用“来信 / 回信”的艺术化叙事结构。当代回信、旁白与提问为创作者基于公开史实和现实素材进行的当代叙事转译，并非历史人物原话。",
+    "《下一代，来信了》是“2026 重庆青年写给红岩英烈的一封回信”，采用“来信 / 回信”的艺术化叙事结构。当代回信、旁白与提问为创作者基于公开史实和现实素材进行的当代叙事转译，并非历史人物原话。",
     "部分非史实性氛围画面由生成式工具辅助创作；历史事实与史料、实拍图片均另行标注来源。"
   ],
   history: [
@@ -55,6 +55,99 @@ export const sourceNotes = {
   ]
 };
 
+export const heJingpingMediaSlots = [
+  {
+    id: "hejingping-portrait",
+    title: "何敬平烈士肖像",
+    type: "portrait",
+    aspectRatio: "4 / 5",
+    institution: "重庆市档案馆",
+    status: "pending-authorization",
+    sourceUrl: "",
+    localAsset: "",
+    alt: "",
+    note: "待取得正式授权后替换"
+  },
+  {
+    id: "hejingping-nuhou-registration",
+    title: "怒吼剧社社员登记表",
+    type: "archive",
+    aspectRatio: "3 / 4",
+    institution: "重庆市档案馆",
+    status: "pending-authorization",
+    sourceUrl: "",
+    localAsset: "",
+    alt: "",
+    note: "待取得正式授权后替换"
+  },
+  {
+    id: "hejingping-poetry-exhibit",
+    title: "何敬平诗作或铁窗诗社相关展陈",
+    type: "archive",
+    aspectRatio: "4 / 3",
+    institution: "待核实",
+    status: "pending-authorization",
+    sourceUrl: "",
+    localAsset: "",
+    alt: "",
+    note: "待取得正式授权后替换"
+  }
+];
+
+export const heJingpingArchive = {
+  eyebrow: "档案",
+  title: "何敬平烈士事迹",
+  sections: [
+    {
+      id: "profile",
+      number: "档案 01",
+      title: "人物",
+      fields: [
+        ["姓名", "何敬平"],
+        ["生卒年", "1918—1949"],
+        ["出生地", "四川省巴县木洞镇，今重庆市巴南区木洞镇"],
+        ["身份", "中共党员、革命烈士、铁窗诗人"]
+      ],
+      timeline: [
+        "青年时期参加抗日救亡活动",
+        "1943 年进入重庆电力公司",
+        "参与地下党读书会",
+        "1945 年参与相关民主运动，后加入中国共产党",
+        "1946 年任中共重庆电力公司党支部组织委员",
+        "参与怒吼剧社活动"
+      ],
+      mediaSlotIds: ["hejingping-portrait"]
+    },
+    {
+      id: "poems",
+      number: "档案 02",
+      title: "狱中与诗作",
+      timeline: [
+        "1948 年春被捕",
+        "先后关押于石板坡第二模范监狱、渣滓洞",
+        "在狱中参与斗争与诗歌创作",
+        "1949 年 1 月 29 日与难友成立铁窗诗社"
+      ],
+      poems: ["《把牢底坐穿》", "《肚皮饿了要吃饭》", "《问牧民者》", "《更夫》", "《我是江河》"],
+      quote: "为了免除下一代的苦难，\n我们愿——愿把这牢底坐穿。",
+      mediaSlotIds: ["hejingping-nuhou-registration", "hejingping-poetry-exhibit"]
+    },
+    {
+      id: "dawn",
+      number: "档案 03",
+      title: "黎明之前",
+      timeline: [
+        "1949 年 11 月 27 日",
+        "在渣滓洞大屠杀中殉难",
+        "年仅 31 岁",
+        "距离重庆解放仅三天"
+      ],
+      abstract: true
+    }
+  ],
+  note: "《把牢底坐穿》的具体创作季节表述待馆方核验；页面主叙事统一写作“1948 年，在重庆渣滓洞”。"
+};
+
 export const chapters = [
   {
     id: "prologue",
@@ -85,7 +178,7 @@ export const chapters = [
     theme: "archive-dark",
     height: 3000,
     eyebrow: "那不是一封真正寄出的信",
-    quote: "为了免除下一代的苦难，我们愿把这牢底坐穿。",
+    quote: "为了免除下一代的苦难，\n我们愿——愿把这牢底坐穿。",
     paragraphs: [
       "何敬平在狱中写下的诗句，成为这封回信的起点。",
       "它没有要求今天的人反复回望痛苦，只把一个问题递到我们手里：下一代，真的到来了吗？",
@@ -98,7 +191,7 @@ export const chapters = [
     profileCard: {
       name: "何敬平",
       years: "1918-1949",
-      details: ["重庆巴南木洞人", "1948 年夏，于渣滓洞创作《把牢底坐穿》"]
+      details: ["四川省巴县木洞镇人，今重庆市巴南区木洞镇", "1948 年，在重庆渣滓洞留下诗作《把牢底坐穿》"]
     }
   },
   {
@@ -116,7 +209,7 @@ export const chapters = [
       "他们不知道，自己牺牲以后，那个被称作“下一代”的人，会不会真的走到光里。"
     ],
     timeline: [
-      { date: "1948 年夏", text: "何敬平创作《把牢底坐穿》" },
+      { date: "1948 年", text: "何敬平在重庆渣滓洞留下诗作《把牢底坐穿》" },
       { date: "1949 年 11 月 27 日", text: "许多人停在黎明之前" },
       { date: "1949 年 11 月 30 日", text: "重庆解放" },
       { date: "2026 年", text: "回信的人到来" }

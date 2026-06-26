@@ -65,6 +65,10 @@
   --sans: "Story Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --letter: "Letter Hand", "LXGW WenKai", "Kaiti SC", "KaiTi", "STKaiti", serif;
   --page-width: 1440px;
+  --edge-control-size: 54px;
+  --edge-safe-gap: 12px;
+  --edge-bottom-reserve: 92px;
+  --edge-top-reserve: 72px;
   --section-00-height: 2600px;
   --section-01-height: 3200px;
   --section-02-height: 3400px;

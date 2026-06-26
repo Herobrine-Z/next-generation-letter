@@ -174,6 +174,7 @@ h2 {
   font-family: var(--serif);
   font-size: clamp(28px, 3.5vw, 54px);
   line-height: 1.45;
+  white-space: pre-line;
   background: rgba(9, 10, 11, 0.28);
 }
 
@@ -257,6 +258,20 @@ html[data-capture="true"] .chapter-nav,
 html[data-capture="true"] .mobile-progress,
 html[data-capture="true"] .mobile-nav,
 html[data-capture="true"] .site-header,
-html[data-capture="true"] .source-button {
+html[data-capture="true"] .source-button,
+html[data-capture="true"] .audio-player {
   display: none !important;
+}
+
+.noscript-fallback {
+  max-width: 760px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 80px 24px;
+  color: var(--paper-light);
+}
+
+.noscript-fallback h1,
+.noscript-fallback blockquote {
+  font-family: var(--serif);
 }

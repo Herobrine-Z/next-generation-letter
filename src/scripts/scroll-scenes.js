@@ -175,7 +175,7 @@ export function setupNavSpy(chapters) {
   });
 }
 
-export function setupChapterProgress(chapters) {
+export function setupChapterProgress(chapters, audio) {
   const root = document.querySelector("[data-chapter-progress]");
   if (!root) return () => {};
 
@@ -188,6 +188,11 @@ export function setupChapterProgress(chapters) {
     if (!chapter) return;
     number.textContent = chapter.number;
     title.textContent = chapter.shortTitle || chapter.title;
+    if (chapter.id === "city-answer") {
+      audio?.setAmbient?.("city", { crossfade: true });
+    } else if (["prologue", "archive", "three-days", "too-light"].includes(chapter.id)) {
+      audio?.setAmbient?.("dark", { crossfade: true });
+    }
   };
 
   if (fill) gsap.set(fill, { transformOrigin: "top" });
