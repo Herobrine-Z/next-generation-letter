@@ -1,4 +1,5 @@
 import { gsap, MotionPathPlugin, ScrollTrigger } from "./gsap-setup.js";
+import { scheduleScrollRefresh } from "./scroll-scenes.js";
 
 const q = (root, selector) => root.querySelector(selector);
 const qa = (root, selector) => gsap.utils.toArray(selector, root);
@@ -25,7 +26,7 @@ function createOnceTrigger(root, timeline, start = "top 75%") {
   });
 }
 
-function initArchiveDevelop(root, reduceMotion) {
+function initArchiveDevelop(root, reduceMotion, profile) {
   const stage = q(root, '[data-narrative-stage="archiveDevelop"]');
   if (!stage) return null;
   const photo = q(stage, ".ngl-archive-develop__frame");
@@ -35,6 +36,28 @@ function initArchiveDevelop(root, reduceMotion) {
   const grain = q(stage, ".ngl-archive-develop__grain");
   const captionItems = qa(stage, ".ngl-archive-develop__caption > *");
   const tl = gsap.timeline({ paused: true, defaults: { ease: "power2.inOut" } });
+
+  if (profile === "lite") {
+    gsap.set([photo, scene, captionItems], { autoAlpha: 1, scale: 1, y: 0, filter: "none" });
+    gsap.set([emulsion, scan, grain], { autoAlpha: 0 });
+    return null;
+  }
+
+  if (profile === "balanced") {
+    tl.set(photo, { autoAlpha: 0.72, scale: 0.98, rotate: -0.8 })
+      .set(scene, { opacity: 0.45, scale: 1.01, filter: "grayscale(0.45) contrast(0.88) brightness(1.08)" })
+      .set([emulsion, scan, grain], { opacity: 0 })
+      .set(captionItems, { autoAlpha: 0, y: 8 })
+      .to(photo, { autoAlpha: 1, scale: 1, rotate: 0, duration: 0.5, ease: "power2.out" }, 0)
+      .to(scene, { opacity: 1, filter: "grayscale(0.05) contrast(1) brightness(0.96)", duration: 0.7 }, 0.22)
+      .to(captionItems, { autoAlpha: 1, y: 0, stagger: 0.08, duration: 0.34 }, 0.62);
+
+    if (reduceMotion) {
+      tl.progress(1).pause();
+      return null;
+    }
+    return createOnceTrigger(stage, tl, "top 78%");
+  }
 
   tl.set(photo, { autoAlpha: 0.62, scale: 0.97, rotate: -1.4 })
     .set(scene, { filter: "grayscale(1) contrast(0.18) brightness(1.74) blur(7px)", opacity: 0.2, scale: 1.02 })
@@ -59,7 +82,7 @@ function initArchiveDevelop(root, reduceMotion) {
   return createOnceTrigger(stage, tl, "top 75%");
 }
 
-function initHistoryTimeline(root, reduceMotion) {
+function initHistoryTimeline(root, reduceMotion, profile) {
   const stage = q(root, '[data-narrative-stage="timeline"]');
   if (!stage) return null;
   const progress = q(stage, ".ngl-history-timeline__progress");
@@ -81,9 +104,12 @@ function initHistoryTimeline(root, reduceMotion) {
   });
   tl.to(ending, { autoAlpha: 1, y: 0, duration: 0.84 }, 4.88);
 
-  if (reduceMotion) {
+  if (reduceMotion || profile === "lite") {
     tl.progress(1).pause();
     return null;
+  }
+  if (profile === "balanced") {
+    return createOnceTrigger(stage, tl, "top 78%");
   }
   return ScrollTrigger.create({
     trigger: stage,
@@ -94,7 +120,7 @@ function initHistoryTimeline(root, reduceMotion) {
   });
 }
 
-function initBarsToBridge(root, reduceMotion) {
+function initBarsToBridge(root, reduceMotion, profile) {
   const stage = q(root, '[data-narrative-stage="barsBridge"]');
   if (!stage) return null;
   const lines = qa(stage, ".ngl-morph-line");
@@ -144,9 +170,13 @@ function initBarsToBridge(root, reduceMotion) {
     .to(windowFrame, { opacity: 0, duration: 0.65 }, 1.52)
     .to(sun, { opacity: 0.86, scale: 1, duration: 1.1, ease: "power2.out" }, 1.82);
 
-  if (reduceMotion) {
+  if (reduceMotion || profile === "lite") {
     tl.progress(1).pause();
     return null;
+  }
+  if (profile === "balanced") {
+    tl.duration(Math.min(tl.duration(), 2.1));
+    return createOnceTrigger(stage, tl, "top 78%");
   }
   return ScrollTrigger.create({
     trigger: stage,
@@ -157,7 +187,7 @@ function initBarsToBridge(root, reduceMotion) {
   });
 }
 
-function initCityRoute(root, reduceMotion) {
+function initCityRoute(root, reduceMotion, profile) {
   const stage = q(root, '[data-narrative-stage="cityRoute"]');
   if (!stage) return null;
   const routePath = q(stage, "#nglCityRoutePath");
@@ -188,14 +218,14 @@ function initCityRoute(root, reduceMotion) {
   });
   tl.to(bridge, { autoAlpha: 1, strokeDashoffset: 0, duration: 1 }, 3.55);
 
-  if (reduceMotion || !MotionPathPlugin) {
+  if (reduceMotion || profile === "lite" || !MotionPathPlugin) {
     tl.progress(1).pause();
     return null;
   }
   return createOnceTrigger(stage, tl, "top 72%");
 }
 
-function initFinalLetterUnfold(root, reduceMotion) {
+function initFinalLetterUnfold(root, reduceMotion, profile) {
   const stage = q(root, '[data-narrative-stage="letterUnfold"]');
   if (!stage) return null;
   const shell = q(stage, ".ngl-letter-shell");
@@ -208,6 +238,33 @@ function initFinalLetterUnfold(root, reduceMotion) {
   const threadLength = prepareDraw(threadPath);
   const targetHeight = Math.max(620, content.scrollHeight + 96);
   const tl = gsap.timeline({ paused: true, defaults: { ease: "power2.inOut" } });
+
+  if (profile === "lite") {
+    gsap.set(shell, { height: "auto", y: 0, scaleX: 1, autoAlpha: 1 });
+    gsap.set([topFold, bottomFold], { autoAlpha: 0 });
+    gsap.set(content, { clipPath: "none" });
+    gsap.set(contentChildren, { autoAlpha: 1, y: 0 });
+    gsap.set(threadPath, { strokeDashoffset: 0 });
+    return null;
+  }
+
+  if (profile === "balanced") {
+    tl.set(shell, { height: Math.max(360, Math.min(targetHeight, 560)), y: 18, scaleX: 0.98, autoAlpha: 1 })
+      .set(dawn, { opacity: 0.62 })
+      .set([topFold, bottomFold], { autoAlpha: 0 })
+      .set(content, { clipPath: "none" })
+      .set(contentChildren, { autoAlpha: 0, y: 12 })
+      .set(threadPath, { strokeDashoffset: threadLength })
+      .to(shell, { height: targetHeight, y: 0, scaleX: 1, duration: 0.86, ease: "power2.out" }, 0)
+      .to(threadPath, { strokeDashoffset: 0, duration: 1.1, ease: "power1.out" }, 0.12)
+      .to(contentChildren, { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.06, ease: "power2.out" }, 0.2);
+
+    if (reduceMotion) {
+      tl.progress(1).pause();
+      return null;
+    }
+    return createOnceTrigger(stage, tl, "top 76%");
+  }
 
   tl.set(shell, { height: 132, y: 38, scaleX: 0.94, autoAlpha: 1 })
     .set(dawn, { opacity: 0.16 })
@@ -232,6 +289,7 @@ function initFinalLetterUnfold(root, reduceMotion) {
 
 export function initNarrativeAnimations(root = document) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const profile = document.documentElement.dataset.performance || "full";
   const triggers = [];
   const initialized = new WeakSet();
   const scenes = [
@@ -245,9 +303,9 @@ export function initNarrativeAnimations(root = document) {
   const initScene = (sceneRoot, init) => {
     if (!sceneRoot || initialized.has(sceneRoot)) return;
     initialized.add(sceneRoot);
-    const trigger = init(sceneRoot.ownerDocument, reduceMotion);
+    const trigger = init(sceneRoot.ownerDocument, reduceMotion, profile);
     if (trigger) triggers.push(trigger);
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    scheduleScrollRefresh(true);
   };
 
   if (!("IntersectionObserver" in window)) {

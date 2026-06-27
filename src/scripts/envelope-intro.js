@@ -154,6 +154,7 @@ export function setupEnvelopeIntro({ audio } = {}) {
   };
 
   function prepare() {
+    const sceneScale = window.matchMedia("(max-width: 768px)").matches ? 1 : 1.055;
     clearInlineStyles([
       el.hint,
       el.envelope,
@@ -174,7 +175,7 @@ export function setupEnvelopeIntro({ audio } = {}) {
     setState(STATE.IDLE);
     hideEntireLetter();
     gsap.set(root, { autoAlpha: 1 });
-    gsap.set(el.scene, { opacity: 0.18, scale: 1.055 });
+    gsap.set(el.scene, { opacity: 0.18, scale: sceneScale });
     gsap.set(el.stage, { autoAlpha: 1, y: 0 });
     gsap.set(el.letter, { yPercent: 0, scale: 0.985, autoAlpha: 0 });
     gsap.set(el.flapClosed, { scaleY: 1, autoAlpha: 1, transformOrigin: "50% 0%" });

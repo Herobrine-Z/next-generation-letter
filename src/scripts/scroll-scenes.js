@@ -34,6 +34,39 @@ export function scheduleScrollRefresh(force = true) {
   }, 180);
 }
 
+function performanceProfile() {
+  return document.documentElement.dataset.performance || "full";
+}
+
+function setupMobileReveal(revealTargets, reduceMotion) {
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    gsap.set(revealTargets, { autoAlpha: 1, x: 0, y: 0, scale: 1, clearProps: "willChange" });
+    return () => {};
+  }
+
+  gsap.set(revealTargets, { autoAlpha: 0, y: 14, willChange: "opacity, transform" });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      gsap.to(entry.target, {
+        autoAlpha: 1,
+        y: 0,
+        duration: performanceProfile() === "lite" ? 0.32 : 0.48,
+        ease: "power2.out",
+        overwrite: true,
+        onComplete: () => gsap.set(entry.target, { clearProps: "willChange" })
+      });
+    });
+  }, {
+    rootMargin: "90px 0px",
+    threshold: 0.01
+  });
+
+  revealTargets.forEach((el) => observer.observe(el));
+  return () => observer.disconnect();
+}
+
 function setupScrollRefreshWatchers() {
   const events = [
     [window, "resize"],
@@ -46,6 +79,7 @@ function setupScrollRefreshWatchers() {
   });
 
   window.visualViewport?.addEventListener("resize", onLayoutChange, { passive: true });
+  window.visualViewport?.addEventListener("scroll", onLayoutChange, { passive: true });
 
   document.fonts?.ready?.then(onLayoutChange);
 
@@ -62,6 +96,7 @@ function setupScrollRefreshWatchers() {
       target.removeEventListener(eventName, onLayoutChange);
     });
     window.visualViewport?.removeEventListener("resize", onLayoutChange);
+    window.visualViewport?.removeEventListener("scroll", onLayoutChange);
     images.forEach((img) => {
       img.removeEventListener("load", onLayoutChange);
       img.removeEventListener("error", onLayoutChange);
@@ -71,15 +106,20 @@ function setupScrollRefreshWatchers() {
 
 export function setupScrollScenes() {
   const isCapture = document.documentElement.dataset.capture === "true";
+  const profile = performanceProfile();
   const mm = gsap.matchMedia();
   const cleanupRefreshWatchers = setupScrollRefreshWatchers();
+  const cleanupVisibility = setupTimelineVisibility();
 
   if (isCapture) {
     document.querySelectorAll(".reveal, [data-reveal]").forEach((el) => {
       el.style.opacity = 1;
       el.style.transform = "none";
     });
-    return cleanupRefreshWatchers;
+    return () => {
+      cleanupRefreshWatchers();
+      cleanupVisibility();
+    };
   }
 
   gsap.defaults({ ease: "power2.out", duration: 0.8 });
@@ -101,6 +141,10 @@ export function setupScrollScenes() {
         return;
       }
 
+      if (isSmallMobile) {
+        return setupMobileReveal(revealTargets, reduceMotion);
+      }
+
       revealTargets.forEach((el) => {
         const vars = revealVars(el.dataset.reveal || "text", isSmallMobile);
         gsap.fromTo(el, vars.from, {
@@ -114,7 +158,7 @@ export function setupScrollScenes() {
         });
       });
 
-      if (!isSmallMobile) {
+      if (!isSmallMobile && profile === "full") {
         gsap.utils.toArray(".asset-bg img").forEach((img) => {
           gsap.fromTo(img, { scale: 1.05 }, {
             scale: 1,
@@ -203,7 +247,35 @@ export function setupScrollScenes() {
   window.addEventListener("load", () => scheduleScrollRefresh(true), { once: true });
   return () => {
     cleanupRefreshWatchers();
+    cleanupVisibility();
     mm.revert();
+  };
+}
+
+function setupTimelineVisibility() {
+  let pausedForHidden = false;
+  const pause = () => {
+    if (!document.hidden) return;
+    pausedForHidden = true;
+    gsap.globalTimeline.pause();
+  };
+  const resume = () => {
+    if (!pausedForHidden) return;
+    pausedForHidden = false;
+    gsap.globalTimeline.resume();
+    scheduleScrollRefresh(true);
+  };
+  const handleVisibility = () => {
+    if (document.hidden) pause();
+    else resume();
+  };
+  document.addEventListener("visibilitychange", handleVisibility);
+  window.addEventListener("pagehide", pause);
+  window.addEventListener("pageshow", resume);
+  return () => {
+    document.removeEventListener("visibilitychange", handleVisibility);
+    window.removeEventListener("pagehide", pause);
+    window.removeEventListener("pageshow", resume);
   };
 }
 

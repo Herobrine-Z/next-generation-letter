@@ -24,10 +24,10 @@ function responsiveCandidates(path) {
 
 function defaultSizes(asset) {
   if (asset.role === "hero" || asset.role === "overlay") return "100vw";
-  if (asset.role === "wide") return "(max-width: 767px) 88vw, (max-width: 1200px) 56vw, 760px";
-  if (asset.role === "archive") return "(max-width: 767px) 86vw, (max-width: 1200px) 44vw, 560px";
-  if (asset.role === "paper") return "(max-width: 767px) 86vw, 720px";
-  return "(max-width: 767px) 86vw, 520px";
+  if (asset.role === "wide") return "(max-width: 640px) calc(100vw - 36px), (max-width: 767px) 88vw, (max-width: 1200px) 56vw, 760px";
+  if (asset.role === "archive") return "(max-width: 640px) calc(100vw - 36px), (max-width: 767px) 86vw, (max-width: 1200px) 44vw, 560px";
+  if (asset.role === "paper") return "(max-width: 640px) calc(100vw - 36px), (max-width: 767px) 86vw, 720px";
+  return "(max-width: 640px) calc(100vw - 36px), (max-width: 767px) 86vw, 520px";
 }
 
 function preferredFallback(path) {
@@ -66,7 +66,7 @@ export function createImage(asset, eager = false) {
   img.classList.toggle("asset-img--ai", Boolean(asset.ai));
   img.decoding = "async";
   img.loading = eager ? "eager" : "lazy";
-  img.fetchPriority = eager ? "high" : "auto";
+  img.fetchPriority = eager ? "high" : "low";
   if (metadata) {
     img.width = metadata.width;
     img.height = metadata.height;

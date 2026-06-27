@@ -532,7 +532,8 @@
   }
 
   .ngl-archive-develop {
-    width: calc(100vw - 32px);
+    width: 100%;
+    max-width: calc(100vw - 32px);
     padding: 12px;
     transform: none;
   }
@@ -554,7 +555,8 @@
   }
 
   .ngl-bridge-stage {
-    width: calc(100vw - 32px);
+    width: 100%;
+    max-width: calc(100vw - 32px);
     gap: 18px;
     padding: 24px 18px 28px;
   }
@@ -709,6 +711,26 @@
     left: 14px;
     opacity: 0.42;
   }
+}
+
+html[data-performance="balanced"] .ngl-archive-develop__scan,
+html[data-performance="lite"] .ngl-archive-develop__scan {
+  display: none;
+}
+
+html[data-performance="balanced"] .ngl-history-timeline__progress,
+html[data-performance="balanced"] .ngl-draw-path,
+html[data-performance="balanced"] .ngl-city-route__road,
+html[data-performance="lite"] .ngl-history-timeline__progress,
+html[data-performance="lite"] .ngl-draw-path,
+html[data-performance="lite"] .ngl-city-route__road,
+html[data-performance="lite"] .thread-path {
+  filter: none;
+}
+
+html[data-performance="lite"] .ngl-stage-noise,
+html[data-performance="lite"] .ngl-archive-develop__grain {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

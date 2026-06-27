@@ -45,6 +45,8 @@ html {
 .story {
   position: relative;
   width: min(100%, var(--page-width));
+  min-width: 0;
+  max-width: 100%;
   margin: 0 auto;
   background: var(--coal-black);
   box-shadow: 0 0 72px rgba(0, 0, 0, 0.55);
@@ -67,6 +69,9 @@ html {
 .chapter-section {
   --section-height: auto;
   position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: var(--section-height);
   isolation: isolate;
   overflow: hidden;
@@ -89,6 +94,9 @@ html {
   position: relative;
   z-index: 5;
   display: grid;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.76fr);
   gap: clamp(32px, 6vw, 96px);
   align-items: center;
@@ -111,7 +119,8 @@ html {
   position: relative;
   z-index: 5;
   isolation: isolate;
-  max-width: 720px;
+  min-width: 0;
+  max-width: min(100%, 720px);
   padding: clamp(26px, 3.5vw, 52px);
   border-left: 1px solid rgba(181, 34, 43, 0.58);
   background:
@@ -163,6 +172,7 @@ h2 {
 .chapter-title {
   position: relative;
   z-index: 5;
+  max-width: 100%;
   margin: 0 0 28px;
   color: var(--text-light);
   font-size: clamp(58px, 5.8vw, 88px);
@@ -243,6 +253,8 @@ h2 {
 
 .chapter-media {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
   min-height: 560px;
 }
 

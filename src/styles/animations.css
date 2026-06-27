@@ -63,3 +63,17 @@ html[data-capture="true"] .reveal {
 html[data-capture="true"] .thread-path {
   stroke-dashoffset: 0 !important;
 }
+
+html[data-performance="lite"] .dust {
+  display: none;
+}
+
+html[data-performance="lite"] .grain {
+  opacity: 0.045;
+}
+
+html[data-performance="balanced"] .chapter-overlay,
+html[data-performance="lite"] .chapter-overlay {
+  animation: none !important;
+  transform: none !important;
+}

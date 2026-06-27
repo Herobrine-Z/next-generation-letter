@@ -16,6 +16,10 @@ import { setupEnvelopeIntro } from "./envelope-intro.js";
 import { setupAudioController } from "./audio-controller.js";
 import { initNarrativeAnimations } from "./narrative-animations.js";
 import { renderNarrativeBlock } from "./narrative-markup.js";
+import { auditHorizontalOverflow } from "./layout-audit.js";
+import { applyPerformanceProfile } from "./performance-profile.js";
+
+applyPerformanceProfile();
 
 const params = new URLSearchParams(window.location.search);
 if (params.get("capture") === "1") {
@@ -64,6 +68,21 @@ function renderHeading(chapter, index) {
   const className = index === 0 ? "chapter-title chapter-title--cover" : "chapter-title";
   const content = chapter.titleLines?.length ? renderSafeLines(chapter.titleLines) : escapeHtml(chapter.title);
   return `<${tag} id="${chapter.id}-title" class="${className}">${content}</${tag}>`;
+}
+
+function renderSourceFootnote() {
+  const footnote = document.createElement("aside");
+  footnote.className = "ending-source-footnote";
+  footnote.setAttribute("aria-labelledby", "ending-source-title");
+  footnote.innerHTML = `
+    <div class="ending-source-footnote__line" aria-hidden="true"></div>
+    <p class="ending-source-footnote__index">注释 / SOURCES</p>
+    <h2 id="ending-source-title" class="ending-source-footnote__title">资料来源</h2>
+    <button class="source-button source-button--inline" type="button" aria-haspopup="dialog">
+      查看资料来源与创作说明
+    </button>
+  `;
+  return footnote;
 }
 
 function renderChapter(chapter, index) {
@@ -124,6 +143,10 @@ function renderChapter(chapter, index) {
   const narrativeBlock = renderNarrativeBlock(chapter);
   if (narrativeBlock) section.append(narrativeBlock);
 
+  if (chapter.id === "ending") {
+    section.append(renderSourceFootnote());
+  }
+
   if (chapter.id === "city-answer") {
     section.insertAdjacentHTML("beforeend", `<div class="transition-lines" aria-hidden="true"></div>`);
   }
@@ -141,7 +164,7 @@ mobileNav.innerHTML = chapters.map((chapter) => `<a href="#${chapter.id}">${chap
 
 setupMobileNav(document.querySelector(".mobile-progress"), mobileNav);
 setupModal({
-  button: document.querySelector(".source-button"),
+  button: document.querySelector(".source-button--inline"),
   shell: document.querySelector(".modal-shell"),
   content: document.querySelector(".source-modal__content"),
   sourceNotes,
@@ -166,6 +189,7 @@ function enterStory(event) {
   setupNavSpy(chapters);
   setupChapterProgress(chapters, audio);
   requestAnimationFrame(() => refreshScrollScenes(true));
+  if (import.meta.env.DEV) window.auditHorizontalOverflow = () => auditHorizontalOverflow();
   window.setTimeout(() => story.focus({ preventScroll: true }), 0);
 }
 

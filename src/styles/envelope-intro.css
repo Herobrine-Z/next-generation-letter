@@ -427,6 +427,10 @@ html[data-capture="true"] .envelope-intro {
     padding-block: clamp(10px, 3dvh, 28px);
   }
 
+  .envelope-intro__scene img {
+    transform: none;
+  }
+
   .envelope-stage {
     width: min(90vw, 34rem);
     max-width: calc(100vw - 32px);
