@@ -124,7 +124,7 @@ function initBarsToBridge(root, reduceMotion) {
     .set([dawn, hills, river, sun], { opacity: 0 })
     .set(windowFrame, { opacity: 1, scale: 1, transformOrigin: "50% 50%" })
     .set(before, { autoAlpha: 1, y: 0 })
-    .set(after, { autoAlpha: 0, y: 18 })
+    .set(after, { autoAlpha: 1, y: 0 })
     .to(before, { autoAlpha: 0, y: -18, duration: 0.65 }, 0.2)
     .to(windowFrame, { opacity: 0.16, scale: 1.04, duration: 1.05 }, 0.52)
     .to(dawn, { opacity: 0.9, duration: 1.7 }, 0.52)
@@ -142,8 +142,7 @@ function initBarsToBridge(root, reduceMotion) {
     }, 0.88)
     .to(drawPaths, { strokeDashoffset: 0, duration: 1.55, stagger: 0.08, ease: "power2.out" }, 1.34)
     .to(windowFrame, { opacity: 0, duration: 0.65 }, 1.52)
-    .to(sun, { opacity: 0.86, scale: 1, duration: 1.1, ease: "power2.out" }, 1.82)
-    .to(after, { autoAlpha: 1, y: 0, duration: 0.85 }, 2.28);
+    .to(sun, { opacity: 0.86, scale: 1, duration: 1.1, ease: "power2.out" }, 1.82);
 
   if (reduceMotion) {
     tl.progress(1).pause();
@@ -233,14 +232,49 @@ function initFinalLetterUnfold(root, reduceMotion) {
 
 export function initNarrativeAnimations(root = document) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const triggers = [
-    initArchiveDevelop(root, reduceMotion),
-    initHistoryTimeline(root, reduceMotion),
-    initBarsToBridge(root, reduceMotion),
-    initCityRoute(root, reduceMotion),
-    initFinalLetterUnfold(root, reduceMotion)
-  ].filter(Boolean);
+  const triggers = [];
+  const initialized = new WeakSet();
+  const scenes = [
+    { selector: '[data-narrative-stage="archiveDevelop"]', init: initArchiveDevelop },
+    { selector: '[data-narrative-stage="timeline"]', init: initHistoryTimeline },
+    { selector: '[data-narrative-stage="barsBridge"]', init: initBarsToBridge },
+    { selector: '[data-narrative-stage="cityRoute"]', init: initCityRoute },
+    { selector: '[data-narrative-stage="letterUnfold"]', init: initFinalLetterUnfold }
+  ];
 
-  requestAnimationFrame(() => ScrollTrigger.refresh(true));
-  return () => triggers.forEach((trigger) => trigger.kill());
+  const initScene = (sceneRoot, init) => {
+    if (!sceneRoot || initialized.has(sceneRoot)) return;
+    initialized.add(sceneRoot);
+    const trigger = init(sceneRoot.ownerDocument, reduceMotion);
+    if (trigger) triggers.push(trigger);
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  };
+
+  if (!("IntersectionObserver" in window)) {
+    scenes.forEach((scene) => initScene(q(root, scene.selector), scene.init));
+    return () => triggers.forEach((trigger) => trigger.kill());
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const scene = scenes.find((item) => entry.target.matches(item.selector));
+      if (!scene) return;
+      observer.unobserve(entry.target);
+      initScene(entry.target, scene.init);
+    });
+  }, {
+    rootMargin: window.matchMedia("(max-width: 640px)").matches ? "520px 0px" : "900px 0px",
+    threshold: 0.01
+  });
+
+  scenes.forEach((scene) => {
+    const sceneRoot = q(root, scene.selector);
+    if (sceneRoot) observer.observe(sceneRoot);
+  });
+
+  return () => {
+    observer.disconnect();
+    triggers.forEach((trigger) => trigger.kill());
+  };
 }

@@ -61,6 +61,10 @@
   --text-light: #eee8dc;
   --text-dark: #222321;
   --muted-light: rgba(238, 232, 220, 0.68);
+  --content-max: 1180px;
+  --content-gutter-desktop: clamp(40px, 5vw, 84px);
+  --content-gutter-tablet: 32px;
+  --content-gutter-mobile: 22px;
   --serif: "Story Serif", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", serif;
   --sans: "Story Sans", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
   --letter: "Letter Hand", "LXGW WenKai", "Kaiti SC", "KaiTi", "STKaiti", serif;
