@@ -1,4 +1,4 @@
-import { assetUrl } from "./asset-loader.js";
+import { assetUrl, imageAttributes } from "./asset-loader.js";
 
 export function renderNarrativeBlock(chapter) {
   if (chapter.id === "archive") return renderArchiveDevelop();
@@ -46,12 +46,10 @@ function renderArchiveDevelop() {
         <div class="ngl-archive-develop__scan" aria-hidden="true"></div>
         <img
           class="ngl-archive-develop__image"
-          src="${assetUrl("01_History_Archive/he-jingping-poetry.webp")}"
           alt="何敬平诗作或铁窗诗社相关展陈"
-          width="1280"
-          height="960"
-          decoding="async"
-          loading="lazy"
+          ${imageAttributes("01_History_Archive/he-jingping-poetry.webp", {
+            sizes: "(max-width: 767px) calc(100vw - 64px), 720px"
+          })}
         />
         <div class="ngl-archive-develop__grain" aria-hidden="true"></div>
       </div>
