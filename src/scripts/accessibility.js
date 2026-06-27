@@ -20,11 +20,19 @@ function renderHistoryItem(item) {
 
 function renderImageRows(images = []) {
   return images.map((item) => `
-    <tr>
-      <td>${escapeHtml(item.file)}</td>
-      <td>${escapeHtml(item.author)}<br>${link(item.sourceUrl, item.title)}<br>${escapeHtml(item.modified)}</td>
-      <td>${link(item.licenseUrl, item.license)}<br>访问：${escapeHtml(item.accessed)}</td>
-    </tr>
+    <article class="source-record">
+      <p class="source-record__number">资料 ${escapeHtml(item.file)}</p>
+      <dl class="source-record__fields">
+        <div>
+          <dt>作者与来源</dt>
+          <dd>${escapeHtml(item.author)}<br>${link(item.sourceUrl, item.title)}<br>${escapeHtml(item.modified)}</dd>
+        </div>
+        <div>
+          <dt>许可</dt>
+          <dd>${link(item.licenseUrl, item.license)}<br>访问：${escapeHtml(item.accessed)}</dd>
+        </div>
+      </dl>
+    </article>
   `).join("");
 }
 
@@ -131,10 +139,9 @@ export function setupModal({ button, shell, content, sourceNotes, mediaSlots = [
     <section class="source-section">
       <h3>图片与授权</h3>
       ${renderAuthorizationList(mediaSlots)}
-      <table>
-        <thead><tr><th>文件</th><th>作者与来源</th><th>许可</th></tr></thead>
-        <tbody>${renderImageRows(sourceNotes.images)}</tbody>
-      </table>
+      <div class="source-records" aria-label="图片授权记录">
+        ${renderImageRows(sourceNotes.images)}
+      </div>
     </section>
     <section class="source-section">
       <h3>创作说明</h3>

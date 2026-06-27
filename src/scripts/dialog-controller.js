@@ -2,6 +2,7 @@ import gsap from "gsap";
 
 const activeControllers = new Set();
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+let scrollLock = null;
 const focusableSelector = [
   "a[href]",
   "button:not([disabled])",
@@ -12,11 +13,53 @@ const focusableSelector = [
 ].join(",");
 
 function isMobileDrawer(mode) {
-  return mode === "drawer" || (mode === "dialog" && window.matchMedia("(max-width: 768px)").matches);
+  return mode === "drawer";
 }
 
 function getFocusables(root) {
   return [...root.querySelectorAll(focusableSelector)].filter((el) => el.offsetParent !== null || el === document.activeElement);
+}
+
+function syncScrollLock() {
+  const locked = [...activeControllers].some((controller) => controller.locksScroll && controller.isOpen());
+  if (locked && !scrollLock) {
+    scrollLock = {
+      x: window.scrollX,
+      y: window.scrollY,
+      bodyPosition: document.body.style.position,
+      bodyTop: document.body.style.top,
+      bodyLeft: document.body.style.left,
+      bodyRight: document.body.style.right,
+      bodyWidth: document.body.style.width,
+      bodyOverflow: document.body.style.overflow,
+      htmlScrollBehavior: document.documentElement.style.scrollBehavior
+    };
+    document.documentElement.classList.add("dialog-open");
+    document.body.classList.add("dialog-open");
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollLock.y}px`;
+    document.body.style.left = `-${scrollLock.x}px`;
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+  } else if (!locked && scrollLock) {
+    const { x, y, bodyPosition, bodyTop, bodyLeft, bodyRight, bodyWidth, bodyOverflow, htmlScrollBehavior } = scrollLock;
+    scrollLock = null;
+    document.documentElement.classList.remove("dialog-open");
+    document.body.classList.remove("dialog-open");
+    document.documentElement.style.scrollBehavior = "auto";
+    document.body.style.position = bodyPosition;
+    document.body.style.top = bodyTop;
+    document.body.style.left = bodyLeft;
+    document.body.style.right = bodyRight;
+    document.body.style.width = bodyWidth;
+    document.body.style.overflow = bodyOverflow;
+    window.scrollTo({ top: y, left: x, behavior: "auto" });
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: y, left: x, behavior: "auto" });
+      document.documentElement.style.scrollBehavior = htmlScrollBehavior;
+    });
+  }
 }
 
 export function createDialogController({
@@ -45,10 +88,7 @@ export function createDialogController({
     if (shell !== panel) panel.hidden = false;
   };
 
-  const focusPanel = () => {
-    const focusables = getFocusables(panel);
-    (focusables[0] || panel).focus({ preventScroll: true });
-  };
+  const focusPanel = () => panel.focus({ preventScroll: true });
 
   const animateOpen = () => {
     timeline?.kill();
@@ -83,9 +123,9 @@ export function createDialogController({
     timeline?.kill();
     if (reduceMotion.matches) {
       setHidden(true);
-      if (lockScroll) document.body.style.overflow = "";
       isOpen = false;
       activeControllers.delete(api);
+      syncScrollLock();
       onAfterClose?.();
       if (restoreFocus) previousFocus?.focus?.({ preventScroll: true });
       return;
@@ -97,9 +137,9 @@ export function createDialogController({
       onComplete: () => {
         timeline = null;
         setHidden(true);
-        if (lockScroll) document.body.style.overflow = "";
         isOpen = false;
         activeControllers.delete(api);
+        syncScrollLock();
         onAfterClose?.();
         if (restoreFocus) previousFocus?.focus?.({ preventScroll: true });
       }
@@ -124,9 +164,10 @@ export function createDialogController({
       previousFocus = trigger;
       onBeforeOpen?.();
       setHidden(false);
-      if (lockScroll) document.body.style.overflow = "hidden";
+      panel.scrollTop = 0;
       isOpen = true;
       activeControllers.add(api);
+      syncScrollLock();
       animateOpen();
     },
     close(restoreFocus = true) {
@@ -136,7 +177,8 @@ export function createDialogController({
     },
     isOpen() {
       return isOpen;
-    }
+    },
+    locksScroll: lockScroll
   };
 
   triggers.forEach((trigger) => trigger.addEventListener("click", () => api.open(trigger)));

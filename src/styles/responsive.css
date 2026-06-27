@@ -78,20 +78,10 @@
     --edge-control-size: 50px;
   }
 
-  .archive-panel {
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: auto;
-    max-height: min(82dvh, 680px);
-    padding:
-      28px
-      max(20px, env(safe-area-inset-right))
-      max(24px, env(safe-area-inset-bottom))
-      max(20px, env(safe-area-inset-left));
-    border-right: 0;
-    border-bottom: 0;
-    border-left: 0;
+  .source-modal.archive-dialog,
+  .archive-panel.archive-dialog {
+    width: min(860px, calc(100vw - 24px));
+    max-height: calc(100dvh - max(24px, env(safe-area-inset-top) + env(safe-area-inset-bottom) + 24px));
   }
 
   .red-thread {
@@ -207,10 +197,22 @@
   }
 
   .archive-fields,
-  .archive-media-grid {
+  .archive-media-grid,
+  .source-record__fields {
     grid-template-columns: 1fr;
   }
 
+  .archive-dialog__header {
+    min-height: 72px;
+    padding: 22px 68px 14px 20px;
+  }
+
+  .source-modal__content,
+  .archive-panel__content {
+    padding: 20px;
+  }
+
+  .modal-close,
   .archive-close {
     right: max(10px, env(safe-area-inset-right));
     top: max(8px, env(safe-area-inset-top));

@@ -84,6 +84,7 @@ export function setupEnvelopeIntro({ audio } = {}) {
   let state = STATE.IDLE;
   let completed = false;
   let started = false;
+  let pendingOpen = false;
   let timeline = null;
   let mm = null;
 
@@ -116,27 +117,39 @@ export function setupEnvelopeIntro({ audio } = {}) {
     document.removeEventListener("keydown", onKeydown);
   };
 
-  const enterStory = (mode) => {
+  const completeIntro = (mode) => {
     if (completed) return;
     completed = true;
     timeline?.kill();
     timeline = null;
-    mm?.revert();
     removeListeners();
     document.documentElement.classList.remove("intro-active");
     document.body.style.overflow = "";
     setState(mode === "skipped" ? STATE.SKIPPED : STATE.COMPLETE);
     root.style.pointerEvents = "none";
+    root.style.visibility = "hidden";
+    root.remove();
+    mm?.revert();
+    mm = null;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    window.dispatchEvent(new CustomEvent("envelope:intro-complete", { detail: { mode } }));
+  };
 
+  const finalizeIntro = (mode) => {
+    if (completed) return;
+    if (mode === "played") {
+      completeIntro(mode);
+      return;
+    }
+    timeline?.kill();
+    timeline = null;
+    gsap.killTweensOf(root);
+    root.style.pointerEvents = "none";
     gsap.to(root, {
       autoAlpha: 0,
-      duration: mode === "played" ? 0.5 : 0.18,
+      duration: 0.18,
       ease: "power2.out",
-      onComplete: () => {
-        root.remove();
-        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-        window.dispatchEvent(new CustomEvent("envelope:intro-complete", { detail: { mode } }));
-      }
+      onComplete: () => completeIntro(mode)
     });
   };
 
@@ -209,7 +222,7 @@ export function setupEnvelopeIntro({ audio } = {}) {
     const tl = gsap.timeline({
       paused: true,
       defaults: { ease: "power3.inOut" },
-      onComplete: () => enterStory("played")
+      onComplete: () => finalizeIntro("played")
     });
 
     tl.timeScale(Math.min(Math.max(introSpeed, 0.1), 2));
@@ -249,20 +262,18 @@ export function setupEnvelopeIntro({ audio } = {}) {
 
   function initTimelines() {
     mm?.revert();
-    mm = gsap.matchMedia();
-    mm.add(
-      {
-        isDesktop: "(min-width: 769px)",
-        isMobile: "(max-width: 768px)"
-      },
-      (context) => {
-        if (completed) return;
-        timeline?.kill();
-        timeline = buildTimeline(context.conditions);
-        applyTestFrame(params.get("frame"));
-        return () => timeline?.kill();
-      }
-    );
+    mm = null;
+    if (completed) return;
+    timeline?.kill();
+    timeline = buildTimeline({
+      isDesktop: window.matchMedia("(min-width: 769px)").matches,
+      isMobile: window.matchMedia("(max-width: 768px)").matches
+    });
+    applyTestFrame(params.get("frame"));
+    if (pendingOpen && state === STATE.OPENING) {
+      pendingOpen = false;
+      timeline.restart();
+    }
   }
 
   function open() {
@@ -279,15 +290,19 @@ export function setupEnvelopeIntro({ audio } = {}) {
       gsap.set(el.seal, { autoAlpha: 0 });
       gsap.set(el.letter, { yPercent: -40, scale: 1 });
       gsap.set([el.letterContent, el.eyebrow, el.title, el.subtitle, el.redline], { autoAlpha: 1, y: 0 });
-      window.setTimeout(() => enterStory("reduced-motion"), 260);
+      window.setTimeout(() => finalizeIntro("reduced-motion"), 260);
       return;
     }
-    timeline?.restart();
+    if (timeline) {
+      timeline.restart();
+    } else {
+      pendingOpen = true;
+    }
   }
 
   function skip() {
     if (completed) return;
-    enterStory("skipped");
+    finalizeIntro("skipped");
   }
 
   function onKeydown(event) {
