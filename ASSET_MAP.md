@@ -6,6 +6,7 @@
 | 00_Cover/AI_WindowLight.webp | 00 | 铁窗光影辅助图 | 是 | 否 | 是 | 铁窗投下的微弱光线 | center |
 | 01_History_Archive_Real/H01_Zhazidong_Exterior_2006.jpg | 01 | 渣滓洞空间档案影像 | 否 | 是 | 否 | 渣滓洞外景资料照片 | center |
 | 01_History_Archive/AI_BlankPrisonPaper.webp | 01 | 诗句承载纸面 | 否 | 否 | 是 | 旧纸与短铅笔的象征画面 | center |
+| 01_History_Archive/he-jingping-poetry.webp | 01 | 档案显影动画中的授权诗作/铁窗诗社展陈素材 | 否 | 是 | 否 | 何敬平诗作或铁窗诗社相关展陈 | contain |
 | 01_History_Archive/AI_FireShadowWall.webp | 02 | 火光墙影背景 | 否 | 否 | 是 | 火光映照的墙面与紧闭木门 | center 48% |
 | 01_History_Archive_Real/H08_Geleshan_Cemetery_Square_2018.jpg | 02 | 歌乐山环境补充 | 否 | 是 | 否 | 歌乐山烈士陵园广场资料照片 | center 46% |
 | 01_History_Archive/Overlay_BurntEdge.png | 02 | 烧焦纸边 overlay | 否 | 否 | 是 | 装饰叠加 | center |

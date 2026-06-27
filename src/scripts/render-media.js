@@ -1,4 +1,5 @@
-import { assetUrl, createImage } from "./asset-loader.js";
+import { createImage } from "./asset-loader.js";
+import { renderFinalLetterUnfold } from "./narrative-markup.js";
 
 function createFrame(asset, eager = false) {
   const frame = document.createElement("figure");
@@ -45,17 +46,7 @@ export function renderMedia(chapter, index) {
   }
 
   if (chapter.id === "ending") {
-    media.className = "chapter-media final-letter reveal";
-    media.dataset.reveal = "archive";
-    const paper = chapter.assets.find((asset) => asset.role === "paper");
-    const letter = document.createElement("div");
-    letter.className = "letter-paper letter-paper--final";
-    if (paper) {
-      letter.style.setProperty("--paper-image", `url("${assetUrl(paper.src)}")`);
-    }
-    letter.innerHTML = chapter.letter.map((line) => `<p>${line}</p>`).join("");
-    media.append(letter);
-    return media;
+    return renderFinalLetterUnfold(chapter);
   }
 
   chapter.assets

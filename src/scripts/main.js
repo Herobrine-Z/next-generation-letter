@@ -2,6 +2,7 @@ import "../styles/layout.css";
 import "../styles/components.css";
 import "../styles/sections.css";
 import "../styles/animations.css";
+import "../styles/narrative.css";
 import "../styles/envelope-intro.css";
 import "../styles/responsive.css";
 import { chapters, heJingpingArchive, heJingpingMediaSlots, sourceNotes } from "./content.js";
@@ -13,6 +14,8 @@ import { refreshScrollScenes, setupChapterProgress, setupScrollScenes, setupNavS
 import { setupArchiveDialog, setupModal, setupMobileNav } from "./accessibility.js";
 import { setupEnvelopeIntro } from "./envelope-intro.js";
 import { setupAudioController } from "./audio-controller.js";
+import { initNarrativeAnimations } from "./narrative-animations.js";
+import { renderNarrativeBlock } from "./narrative-markup.js";
 
 const params = new URLSearchParams(window.location.search);
 if (params.get("capture") === "1") {
@@ -107,6 +110,9 @@ function renderChapter(chapter, index) {
   inner.append(copy, renderMedia(chapter, index));
   section.append(inner);
 
+  const narrativeBlock = renderNarrativeBlock(chapter);
+  if (narrativeBlock) section.append(narrativeBlock);
+
   if (chapter.id === "city-answer") {
     section.insertAdjacentHTML("beforeend", `<div class="transition-lines" aria-hidden="true"></div>`);
   }
@@ -145,6 +151,7 @@ function enterStory(event) {
   if (storyInitialized) return;
   storyInitialized = true;
   setupScrollScenes();
+  initNarrativeAnimations(story);
   setupNavSpy(chapters);
   setupChapterProgress(chapters, audio);
   requestAnimationFrame(() => refreshScrollScenes(true));

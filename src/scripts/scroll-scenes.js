@@ -1,8 +1,5 @@
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "./gsap-setup.js";
 import { typewriter } from "./typewriter.js";
-
-gsap.registerPlugin(ScrollTrigger);
 
 function revealVars(kind, isSmallMobile) {
   const distance = isSmallMobile ? 14 : 26;
@@ -106,26 +103,30 @@ export function setupScrollScenes() {
       gsap.set(".strike-word", { "--strike-progress": 0 });
 
       if (!isSmallMobile) {
-        gsap.to(".chapter-overlay--steam", {
-          yPercent: -3,
-          ease: "sine.inOut",
-          scrollTrigger: {
-            trigger: ".ordinary-road",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.4
-          }
-        });
-        gsap.to(".chapter-overlay--fog", {
-          xPercent: 2,
-          ease: "sine.inOut",
-          scrollTrigger: {
-            trigger: ".ordinary-road",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.6
-          }
-        });
+        if (document.querySelector(".chapter-overlay--steam")) {
+          gsap.to(".chapter-overlay--steam", {
+            yPercent: -3,
+            ease: "sine.inOut",
+            scrollTrigger: {
+              trigger: ".ordinary-road",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.4
+            }
+          });
+        }
+        if (document.querySelector(".chapter-overlay--fog")) {
+          gsap.to(".chapter-overlay--fog", {
+            xPercent: 2,
+            ease: "sine.inOut",
+            scrollTrigger: {
+              trigger: ".ordinary-road",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.6
+            }
+          });
+        }
         gsap.to(".chapter-overlay--plum", {
           yPercent: 4,
           ease: "sine.inOut",
