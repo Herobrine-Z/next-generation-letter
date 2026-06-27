@@ -76,6 +76,7 @@ export function createImage(asset, eager = false) {
     img.sizes = asset.sizes || defaultSizes(asset);
   }
   img.style.setProperty("--asset-position", asset.position || "center");
+  img.style.setProperty("--asset-position-mobile", asset.mobilePosition || asset.position || "center");
   img.addEventListener("error", () => {
     const placeholder = document.createElement("div");
     placeholder.className = "placeholder";

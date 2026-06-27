@@ -174,8 +174,8 @@ export const chapters = [
       "这封信，写给所有未能看见黎明的人。"
     ],
     assets: [
-      { src: "00_Cover/AI_Cover_DarkLetter.webp", alt: "黑暗中浮现的旧信纸", role: "hero", position: "center 42%", ai: true },
-      { src: "00_Cover/AI_WindowLight.webp", alt: "铁窗投下微弱光线", role: "support", position: "center center", ai: true }
+      { src: "00_Cover/AI_Cover_DarkLetter.webp", alt: "黑暗中浮现的旧信纸", role: "hero", position: "center 42%", mobilePosition: "52% 42%", mobileRatio: "16 / 10", mobilePriority: "primary", ai: true },
+      { src: "00_Cover/AI_WindowLight.webp", alt: "铁窗投下微弱光线", role: "support", position: "center center", mobilePosition: "50% 44%", mobileRatio: "16 / 10", mobilePriority: "secondary", ai: true }
     ]
   },
   {
@@ -194,8 +194,8 @@ export const chapters = [
       "档案没有替他们回答。答案必须从今天的路、教室、灯光和普通人的日子里写出来。"
     ],
     assets: [
-      { src: "01_History_Archive_Real/H01_Zhazidong_Exterior_2006.jpg", alt: "渣滓洞旧址外景资料照片", role: "hero", position: "center center", real: true, historical: true },
-      { src: "01_History_Archive/AI_BlankPrisonPaper.webp", alt: "旧纸与铅笔的象征画面", role: "paper", position: "center center", ai: true }
+      { src: "01_History_Archive_Real/H01_Zhazidong_Exterior_2006.jpg", alt: "渣滓洞旧址外景资料照片", role: "hero", position: "center center", mobilePosition: "54% 46%", mobileRatio: "16 / 10", mobilePriority: "primary", real: true, historical: true },
+      { src: "01_History_Archive/AI_BlankPrisonPaper.webp", alt: "旧纸与铅笔的象征画面", role: "paper", position: "center center", mobilePosition: "50% 50%", mobileFit: "contain", mobileRatio: "4 / 5", mobilePriority: "secondary", ai: true }
     ],
     profileCard: {
       name: "何敬平",
@@ -224,8 +224,8 @@ export const chapters = [
       { date: "2026 年", text: "回信的人到来" }
     ],
     assets: [
-      { src: "01_History_Archive/AI_FireShadowWall.webp", alt: "火光映照墙面与紧闭木门", role: "hero", position: "center 48%", ai: true },
-      { src: "01_History_Archive_Real/H08_Geleshan_Cemetery_Square_2018.jpg", alt: "歌乐山烈士陵园广场资料照片", role: "archive", position: "center 46%", real: true, historical: true },
+      { src: "01_History_Archive/AI_FireShadowWall.webp", alt: "火光映照墙面与紧闭木门", role: "hero", position: "center 48%", mobilePosition: "52% 44%", mobileRatio: "16 / 10", mobilePriority: "primary", ai: true },
+      { src: "01_History_Archive_Real/H08_Geleshan_Cemetery_Square_2018.jpg", alt: "歌乐山烈士陵园广场资料照片", role: "archive", position: "center 46%", mobilePosition: "50% 45%", mobileRatio: "16 / 9", mobilePriority: "secondary", real: true, historical: true },
       { src: "01_History_Archive/Overlay_BurntEdge.png", alt: "", role: "overlay", overlayType: "burnt", position: "center center", decorative: true, ai: true }
     ]
   },
@@ -245,8 +245,8 @@ export const chapters = [
       "回信不能只说我们很好。它必须说清楚，我们为什么能拥有这些平常的选择。"
     ],
     assets: [
-      { src: "02_Student_Letter/AI_ModernDeskNight.webp", alt: "现代自习室夜晚写信桌面", role: "hero", position: "center center", ai: true },
-      { src: "04_Education_Real/E09_CQU_Student_Dormitory_No1.jpg", alt: "重庆大学学生宿舍资料照片", role: "archive", position: "center center", real: true }
+      { src: "02_Student_Letter/AI_ModernDeskNight.webp", alt: "现代自习室夜晚写信桌面", role: "hero", position: "center center", mobilePosition: "53% 47%", mobileRatio: "16 / 10", mobilePriority: "primary", ai: true },
+      { src: "04_Education_Real/E09_CQU_Student_Dormitory_No1.jpg", alt: "重庆大学学生宿舍资料照片", role: "archive", position: "center center", mobilePosition: "50% 45%", mobileRatio: "16 / 9", mobilePriority: "supplement", real: true }
     ]
   },
   {
@@ -254,6 +254,7 @@ export const chapters = [
     number: "04",
     label: "城市回答",
     title: "去一座城市里寻找回答",
+    titleLines: ["去一座城市里", "寻找回答"],
     shortTitle: "城市",
     theme: "transition-blue",
     height: 2800,
@@ -264,8 +265,8 @@ export const chapters = [
       "一座城的答案，不在远景里，而在每天有人走过的路上。"
     ],
     assets: [
-      { src: "03_Transition/AI_BarsToBridge.webp", alt: "铁窗到桥索与轨道的转场画面", role: "hero", position: "center center", ai: true },
-      { src: "06_Future_Real/F05_Chongqing_Monorail_Station.jpg", alt: "重庆轨道交通站台资料照片", role: "wide", position: "center 46%", real: true },
+      { src: "03_Transition/AI_BarsToBridge.webp", alt: "铁窗到桥索与轨道的转场画面", role: "hero", position: "center center", mobilePosition: "50% 48%", mobileRatio: "16 / 10", mobilePriority: "primary", ai: true },
+      { src: "06_Future_Real/F05_Chongqing_Monorail_Station.jpg", alt: "重庆轨道交通站台资料照片", role: "wide", position: "center 46%", mobilePosition: "50% 48%", mobileRatio: "16 / 9", mobilePriority: "secondary", real: true },
       { src: "03_Transition/AI_RedLineCity.webp", alt: "", role: "overlay", overlayType: "red-line", position: "center center", decorative: true, ai: true }
     ]
   },
@@ -284,10 +285,10 @@ export const chapters = [
       "你们说的“下一代”，已经能用自己的眼睛认识世界。"
     ],
     assets: [
-      { src: "04_Education_Real/User_Library_Study.png", alt: "图书馆内伏案学习的原创照片", role: "hero", position: "center 42%", real: true },
-      { src: "04_Education/AI_ClassroomLight.webp", alt: "晨光照进教室与书页", role: "paper", position: "center center", ai: true },
-      { src: "04_Education_Real/E02_University_Morning.jpg", alt: "重庆大学校园晨光资料照片", role: "wide", position: "center 45%", real: true },
-      { src: "04_Education_Real/E07_CQU_Old_Library.jpg", alt: "重庆大学老图书馆资料照片", role: "archive", position: "center 48%", real: true }
+      { src: "04_Education_Real/User_Library_Study.png", alt: "图书馆内伏案学习的原创照片", role: "hero", position: "center 42%", mobilePosition: "50% 38%", mobileRatio: "16 / 10", mobilePriority: "primary", real: true },
+      { src: "04_Education/AI_ClassroomLight.webp", alt: "晨光照进教室与书页", role: "paper", position: "center center", mobilePosition: "50% 50%", mobileFit: "contain", mobileRatio: "4 / 5", mobilePriority: "secondary", ai: true },
+      { src: "04_Education_Real/E02_University_Morning.jpg", alt: "重庆大学校园晨光资料照片", role: "wide", position: "center 45%", mobilePosition: "50% 45%", mobileRatio: "16 / 9", mobilePriority: "supplement", real: true },
+      { src: "04_Education_Real/E07_CQU_Old_Library.jpg", alt: "重庆大学老图书馆资料照片", role: "archive", position: "center 48%", mobilePosition: "50% 46%", mobileRatio: "16 / 9", mobilePriority: "supplement", real: true }
     ],
     replySentence: "今天，我们可以用自己的眼睛认识世界。"
   },
@@ -306,9 +307,9 @@ export const chapters = [
       "我们也会害怕，也会迟疑，但我们拥有选择。脚下的路通向远处，也提醒我们把它继续修得更稳、更亮。"
     ],
     assets: [
-      { src: "06_Future_Real/F10_Shazhengjie_Station_CQU.jpg", alt: "沙正街站与重庆大学附近道路资料照片", role: "hero", position: "center 58%", real: true },
-      { src: "06_Future_Real/F05_Chongqing_Monorail_Station.jpg", alt: "重庆轨道交通站台资料照片", role: "wide", position: "center 50%", real: true },
-      { src: "05_OrdinaryLife_Real/L03_Chongqing_Traditional_Market_Street.jpg", alt: "重庆传统市场街道资料照片", role: "archive", position: "center 42%", real: true, historical: true }
+      { src: "06_Future_Real/F10_Shazhengjie_Station_CQU.jpg", alt: "沙正街站与重庆大学附近道路资料照片", role: "hero", position: "center 58%", mobilePosition: "52% 58%", mobileRatio: "16 / 9", mobilePriority: "primary", real: true },
+      { src: "06_Future_Real/F05_Chongqing_Monorail_Station.jpg", alt: "重庆轨道交通站台资料照片", role: "wide", position: "center 50%", mobilePosition: "50% 50%", mobileRatio: "16 / 9", mobilePriority: "secondary", real: true },
+      { src: "05_OrdinaryLife_Real/L03_Chongqing_Traditional_Market_Street.jpg", alt: "重庆传统市场街道资料照片", role: "archive", position: "center 42%", mobilePosition: "50% 42%", mobileRatio: "16 / 9", mobilePriority: "supplement", real: true, historical: true }
     ],
     replySentence: "我们有路可以走，也会把路继续修向远方。"
   },
@@ -321,15 +322,16 @@ export const chapters = [
     theme: "future-dawn",
     height: 3400,
     eyebrow: "今天的青年，能亲手参与未来的建造",
+    eyebrowLines: ["今天的青年，", "能亲手参与未来的建造"],
     paragraphs: [
       "你们曾经等待一个新的中国。",
       "今天的我们，正在学习制造机器、建设桥梁、设计程序、治疗疾病，也把目光投向更远的天空。",
       "我们不必再等待别人决定未来。我们可以亲手参与它的建造。"
     ],
     assets: [
-      { src: "06_Future/AI_MechanicalDawn.webp", alt: "机械、桥梁和实验仪器与黎明的象征画面", role: "hero", position: "center center", ai: true },
-      { src: "06_Future_Real/F08_CQU_Electrical_Engineering_Building.jpg", alt: "重庆大学电气工程学院楼资料照片", role: "archive", position: "center 48%", real: true },
-      { src: "04_Education_Real/E04_CQU_First_Teaching_Building.jpg", alt: "重庆大学第一教学楼资料照片", role: "wide", position: "center 42%", real: true }
+      { src: "06_Future/AI_MechanicalDawn.webp", alt: "机械、桥梁和实验仪器与黎明的象征画面", role: "hero", position: "center center", mobilePosition: "50% 46%", mobileRatio: "16 / 10", mobilePriority: "primary", ai: true },
+      { src: "06_Future_Real/F08_CQU_Electrical_Engineering_Building.jpg", alt: "重庆大学电气工程学院楼资料照片", role: "archive", position: "center 48%", mobilePosition: "50% 45%", mobileRatio: "16 / 9", mobilePriority: "secondary", real: true },
+      { src: "04_Education_Real/E04_CQU_First_Teaching_Building.jpg", alt: "重庆大学第一教学楼资料照片", role: "wide", position: "center 42%", mobilePosition: "50% 42%", mobileRatio: "16 / 9", mobilePriority: "supplement", real: true }
     ],
     replySentence: "今天，我们能够亲手参与未来的建造。"
   },
@@ -348,9 +350,9 @@ export const chapters = [
       "记得，不是停在过去；记得，是知道今天的光从哪里来。"
     ],
     assets: [
-      { src: "07_Remembrance/User_Hongyan_Letter.png", alt: "青年拿着信站在红岩旧址前的原创照片", role: "hero", position: "center 42%", real: true },
-      { src: "01_History_Archive_Real/H05_Geleshan_Martyrs_Mausoleum.jpg", alt: "歌乐山烈士陵园资料照片", role: "wide", position: "center 45%", real: true, historical: true },
-      { src: "01_History_Archive_Real/H06_Geleshan_Martyrs_Cemetery_Sculpture.jpg", alt: "歌乐山烈士陵园雕塑资料照片", role: "archive", position: "center 48%", real: true, historical: true },
+      { src: "07_Remembrance/User_Hongyan_Letter.png", alt: "青年拿着信站在红岩旧址前的原创照片", role: "hero", position: "center 42%", mobilePosition: "50% 36%", mobileRatio: "16 / 10", mobilePriority: "primary", real: true },
+      { src: "01_History_Archive_Real/H05_Geleshan_Martyrs_Mausoleum.jpg", alt: "歌乐山烈士陵园资料照片", role: "wide", position: "center 45%", mobilePosition: "50% 45%", mobileRatio: "16 / 9", mobilePriority: "secondary", real: true, historical: true },
+      { src: "01_History_Archive_Real/H06_Geleshan_Martyrs_Cemetery_Sculpture.jpg", alt: "歌乐山烈士陵园雕塑资料照片", role: "archive", position: "center 48%", mobilePosition: "50% 46%", mobileRatio: "16 / 9", mobilePriority: "supplement", real: true, historical: true },
       { src: "07_Remembrance/Overlay_RedPlum.png", alt: "", role: "overlay", overlayType: "plum", decorative: true, ai: true }
     ]
   },
@@ -381,8 +383,8 @@ export const chapters = [
       "这座城记得你们，也在继续向前。"
     ],
     assets: [
-      { src: "08_Ending/AI_FinalDawn.webp", alt: "重庆山城江面与黎明的象征画面", role: "hero", position: "center 48%", ai: true },
-      { src: "08_Ending/AI_UnfoldedLetter.webp", alt: "晨光中展开的长信纸", role: "paper", position: "center center", ai: true }
+      { src: "08_Ending/AI_FinalDawn.webp", alt: "重庆山城江面与黎明的象征画面", role: "hero", position: "center 48%", mobilePosition: "50% 45%", mobileRatio: "16 / 9", mobilePriority: "primary", ai: true },
+      { src: "08_Ending/AI_UnfoldedLetter.webp", alt: "晨光中展开的长信纸", role: "paper", position: "center center", mobilePosition: "50% 50%", mobileFit: "contain", mobileRatio: "4 / 5", mobilePriority: "supplement", ai: true }
     ]
   }
 ];

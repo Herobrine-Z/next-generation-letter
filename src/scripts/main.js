@@ -55,6 +55,17 @@ function renderTimeline(items) {
   `;
 }
 
+function renderSafeLines(lines = []) {
+  return lines.map((line) => `<span>${escapeHtml(line)}</span>`).join("");
+}
+
+function renderHeading(chapter, index) {
+  const tag = index === 0 ? "h1" : "h2";
+  const className = index === 0 ? "chapter-title chapter-title--cover" : "chapter-title";
+  const content = chapter.titleLines?.length ? renderSafeLines(chapter.titleLines) : escapeHtml(chapter.title);
+  return `<${tag} id="${chapter.id}-title" class="${className}">${content}</${tag}>`;
+}
+
 function renderChapter(chapter, index) {
   const section = document.createElement("section");
   section.id = chapter.id;
@@ -71,6 +82,8 @@ function renderChapter(chapter, index) {
     const bg = document.createElement("div");
     bg.className = "asset-bg";
     bg.style.setProperty("--asset-position", hero.position || "center");
+    bg.style.setProperty("--asset-position-mobile", hero.mobilePosition || hero.position || "center");
+    bg.dataset.mobileFit = hero.mobileFit || "cover";
     bg.append(createImage(hero, index === 0));
     section.append(bg);
   }
@@ -95,10 +108,8 @@ function renderChapter(chapter, index) {
   copy.innerHTML = [
     `<span class="chapter-number">${chapter.number}</span>`,
     chapter.label ? `<p class="chapter-label">${escapeHtml(chapter.label)}</p>` : "",
-    `<p class="eyebrow">${escapeHtml(chapter.eyebrow)}</p>`,
-    index === 0
-      ? `<h1 id="${chapter.id}-title" class="chapter-title chapter-title--cover">${escapeHtml(chapter.title)}</h1>`
-      : `<h2 id="${chapter.id}-title" class="chapter-title">${escapeHtml(chapter.title)}</h2>`,
+    `<p class="eyebrow">${chapter.eyebrowLines?.length ? renderSafeLines(chapter.eyebrowLines) : escapeHtml(chapter.eyebrow)}</p>`,
+    renderHeading(chapter, index),
     chapter.lead ? chapter.lead.map((line) => `<p>${escapeHtml(line)}</p>`).join("") : "",
     chapter.quote ? `<blockquote>${escapeHtml(chapter.quote)}</blockquote>` : "",
     chapter.paragraphs.map((text) => `<p>${escapeHtml(text)}</p>`).join(""),

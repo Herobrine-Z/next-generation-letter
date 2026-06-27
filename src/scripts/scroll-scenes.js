@@ -25,16 +25,61 @@ export function refreshScrollScenes(force = false) {
   ScrollTrigger.refresh(force);
 }
 
+let refreshTimer;
+
+export function scheduleScrollRefresh(force = true) {
+  window.clearTimeout(refreshTimer);
+  refreshTimer = window.setTimeout(() => {
+    ScrollTrigger.refresh(force);
+  }, 180);
+}
+
+function setupScrollRefreshWatchers() {
+  const events = [
+    [window, "resize"],
+    [window, "orientationchange"]
+  ];
+  const onLayoutChange = () => scheduleScrollRefresh(true);
+
+  events.forEach(([target, eventName]) => {
+    target.addEventListener(eventName, onLayoutChange, { passive: true });
+  });
+
+  window.visualViewport?.addEventListener("resize", onLayoutChange, { passive: true });
+
+  document.fonts?.ready?.then(onLayoutChange);
+
+  const images = gsap.utils.toArray("img");
+  images.forEach((img) => {
+    if (img.complete) return;
+    img.addEventListener("load", onLayoutChange, { once: true });
+    img.addEventListener("error", onLayoutChange, { once: true });
+  });
+
+  return () => {
+    window.clearTimeout(refreshTimer);
+    events.forEach(([target, eventName]) => {
+      target.removeEventListener(eventName, onLayoutChange);
+    });
+    window.visualViewport?.removeEventListener("resize", onLayoutChange);
+    images.forEach((img) => {
+      img.removeEventListener("load", onLayoutChange);
+      img.removeEventListener("error", onLayoutChange);
+    });
+  };
+}
+
 export function setupScrollScenes() {
   const isCapture = document.documentElement.dataset.capture === "true";
   const mm = gsap.matchMedia();
+  const cleanupRefreshWatchers = setupScrollRefreshWatchers();
 
   if (isCapture) {
     document.querySelectorAll(".reveal, [data-reveal]").forEach((el) => {
       el.style.opacity = 1;
       el.style.transform = "none";
     });
-    return () => {};
+    return cleanupRefreshWatchers;
   }
 
   gsap.defaults({ ease: "power2.out", duration: 0.8 });
@@ -155,8 +200,11 @@ export function setupScrollScenes() {
     });
   });
 
-  window.addEventListener("load", () => ScrollTrigger.refresh(), { once: true });
-  return () => mm.revert();
+  window.addEventListener("load", () => scheduleScrollRefresh(true), { once: true });
+  return () => {
+    cleanupRefreshWatchers();
+    mm.revert();
+  };
 }
 
 export function setupNavSpy(chapters) {
