@@ -150,7 +150,7 @@ function initBarsToBridge(root, reduceMotion, profile) {
     .set([dawn, hills, river, sun], { opacity: 0 })
     .set(windowFrame, { opacity: 1, scale: 1, transformOrigin: "50% 50%" })
     .set(before, { autoAlpha: 1, y: 0 })
-    .set(after, { autoAlpha: 1, y: 0 })
+    .set(after, { autoAlpha: 0, y: 16 })
     .to(before, { autoAlpha: 0, y: -18, duration: 0.65 }, 0.2)
     .to(windowFrame, { opacity: 0.16, scale: 1.04, duration: 1.05 }, 0.52)
     .to(dawn, { opacity: 0.9, duration: 1.7 }, 0.52)
@@ -168,7 +168,9 @@ function initBarsToBridge(root, reduceMotion, profile) {
     }, 0.88)
     .to(drawPaths, { strokeDashoffset: 0, duration: 1.55, stagger: 0.08, ease: "power2.out" }, 1.34)
     .to(windowFrame, { opacity: 0, duration: 0.65 }, 1.52)
-    .to(sun, { opacity: 0.86, scale: 1, duration: 1.1, ease: "power2.out" }, 1.82);
+    .fromTo(sun, { scale: 0.72 }, { opacity: 0.86, scale: 1, duration: 1.1, ease: "power2.out" }, 1.82)
+    .to(after, { autoAlpha: 1, y: 0, duration: 0.72, ease: "power2.out" }, 2.05)
+    .to(stage, { "--bridge-warmth": 1, duration: 0.8, ease: "power1.out" }, 2.2);
 
   if (reduceMotion || profile === "lite") {
     tl.progress(1).pause();

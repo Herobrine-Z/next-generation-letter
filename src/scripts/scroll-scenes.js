@@ -296,7 +296,7 @@ export function setupNavSpy(chapters) {
   });
 }
 
-export function setupChapterProgress(chapters, audio) {
+export function setupChapterProgress(chapters, audio, storyShell) {
   const root = document.querySelector("[data-chapter-progress]");
   if (!root) return () => {};
 
@@ -314,6 +314,7 @@ export function setupChapterProgress(chapters, audio) {
     } else if (["prologue", "archive", "three-days", "too-light"].includes(chapter.id)) {
       audio?.setAmbient?.("dark", { crossfade: true });
     }
+    storyShell?.setActiveChapter?.(chapter);
   };
 
   if (fill) gsap.set(fill, { transformOrigin: "top" });

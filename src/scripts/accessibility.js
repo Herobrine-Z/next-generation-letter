@@ -161,7 +161,7 @@ export function setupModal({ button, shell, content, sourceNotes, mediaSlots = [
   createDialogController({
     shell,
     panel,
-    openTriggers: [button],
+    openTriggers: Array.isArray(button) ? button : [button],
     closeTriggers: [...shell.querySelectorAll("[data-close]")],
     mode: "dialog"
   });

@@ -18,6 +18,7 @@ import { initNarrativeAnimations } from "./narrative-animations.js";
 import { renderNarrativeBlock } from "./narrative-markup.js";
 import { auditHorizontalOverflow } from "./layout-audit.js";
 import { applyPerformanceProfile } from "./performance-profile.js";
+import { setupStoryShell } from "./story-shell.js";
 
 applyPerformanceProfile();
 
@@ -162,9 +163,10 @@ const mobileNav = document.querySelector(".mobile-nav");
 nav.innerHTML = chapters.map((chapter) => `<a href="#${chapter.id}" data-title="${escapeHtml(chapter.title)}">${chapter.number}</a>`).join("");
 mobileNav.innerHTML = chapters.map((chapter) => `<a href="#${chapter.id}">${chapter.number} ${escapeHtml(chapter.shortTitle)}</a>`).join("");
 
+const storyShell = setupStoryShell(chapters);
 setupMobileNav(document.querySelector(".mobile-progress"), mobileNav);
 setupModal({
-  button: document.querySelector(".source-button--inline"),
+  button: [document.querySelector(".source-button--inline"), storyShell.sourceButton],
   shell: document.querySelector(".modal-shell"),
   content: document.querySelector(".source-modal__content"),
   sourceNotes,
@@ -187,7 +189,7 @@ function enterStory(event) {
   setupScrollScenes();
   initNarrativeAnimations(story);
   setupNavSpy(chapters);
-  setupChapterProgress(chapters, audio);
+  setupChapterProgress(chapters, audio, storyShell);
   requestAnimationFrame(() => refreshScrollScenes(true));
   if (import.meta.env.DEV) window.auditHorizontalOverflow = () => auditHorizontalOverflow();
   window.setTimeout(() => story.focus({ preventScroll: true }), 0);

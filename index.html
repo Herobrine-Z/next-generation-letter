@@ -84,6 +84,26 @@
     <header class="site-header" aria-label="作品标题">
       <p>2026 重庆青年写给红岩英烈的一封回信</p>
     </header>
+    <nav class="story-shell js-only" aria-label="页面导航">
+      <a class="story-shell__brand" href="#prologue" aria-label="回到开头">下一代，来信了</a>
+      <p class="story-shell__chapter" aria-live="polite">
+        <span class="story-shell__number">00</span>
+        <span class="story-shell__title">序章</span>
+      </p>
+      <button class="story-shell__button" type="button" data-story-menu aria-expanded="false" aria-controls="story-shell-drawer">章节</button>
+      <button class="story-shell__button" type="button" data-story-sources>资料</button>
+    </nav>
+    <div id="story-shell-drawer" class="story-shell-drawer js-only" role="dialog" aria-modal="true" aria-labelledby="story-shell-drawer-title" hidden>
+      <div class="story-shell-drawer__backdrop" data-story-drawer-close></div>
+      <section class="story-shell-drawer__panel" tabindex="-1">
+        <header class="story-shell-drawer__header">
+          <p>目录</p>
+          <h2 id="story-shell-drawer-title">章节</h2>
+          <button class="story-shell-drawer__close" type="button" data-story-drawer-close aria-label="关闭章节目录">×</button>
+        </header>
+        <div class="story-shell-drawer__list" data-story-drawer-list></div>
+      </section>
+    </div>
     <nav class="chapter-nav js-only" aria-label="章节导航"></nav>
     <aside class="chapter-progress js-only" data-chapter-progress aria-label="阅读进度">
       <span class="chapter-progress__track" aria-hidden="true"><span class="chapter-progress__fill"></span></span>

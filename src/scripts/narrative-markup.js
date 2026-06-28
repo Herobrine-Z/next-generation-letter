@@ -110,7 +110,7 @@ function renderBarsToBridge() {
       <div class="ngl-stage-noise" aria-hidden="true"></div>
       <div class="ngl-bridge-copy ngl-bridge-copy--before" aria-hidden="true"><span>铁窗</span><strong>竖线仍在黑暗里</strong></div>
       <div class="ngl-bridge-copy ngl-bridge-copy--after"><span>2026 重庆</span><strong>线条成为桥索，路向城中展开</strong></div>
-      <svg class="ngl-bridge-svg" viewBox="0 0 1000 620" role="img" aria-label="铁窗线条转化为桥索">
+      <svg class="ngl-bridge-svg" viewBox="0 0 1000 620" preserveAspectRatio="xMidYMid meet" role="img" aria-label="铁窗线条转化为桥索">
         <rect class="ngl-bridge-wall" width="1000" height="620" />
         <g class="ngl-window-frame">
           <rect x="245" y="92" width="510" height="430" />

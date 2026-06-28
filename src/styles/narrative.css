@@ -10,6 +10,15 @@
   margin: 0 auto;
 }
 
+.narrative-slot--bridge {
+  display: grid;
+  width: 100%;
+  max-width: 1120px;
+  place-items: center;
+  padding-inline: clamp(16px, 5vw, 72px);
+  overflow: clip;
+}
+
 .ngl-stage-noise,
 .ngl-archive-develop__grain {
   position: absolute;
@@ -230,13 +239,17 @@
 }
 
 .ngl-bridge-stage {
+  --bridge-warmth: 0;
   display: grid;
   gap: clamp(20px, 3vw, 38px);
-  width: min(1050px, 78vw);
+  width: min(100%, 980px);
   min-height: clamp(320px, 44vw, 520px);
   margin-inline: auto;
   padding: clamp(30px, 4vw, 56px);
+  aspect-ratio: 4 / 3;
+  transform: none;
   background:
+    linear-gradient(180deg, rgba(214, 168, 95, calc(var(--bridge-warmth) * 0.08)), rgba(37, 56, 62, calc(var(--bridge-warmth) * 0.18))),
     radial-gradient(circle at 76% 18%, rgba(225, 185, 104, 0.13), transparent 20rem),
     linear-gradient(180deg, rgba(11, 13, 14, 0.72), rgba(16, 20, 22, 0.38));
 }
@@ -245,7 +258,16 @@
   width: 100%;
   height: auto;
   min-height: 0;
-  aspect-ratio: 16 / 9;
+  align-self: center;
+  aspect-ratio: 1000 / 620;
+}
+
+.ngl-bridge-svg [class^="ngl-bridge-"],
+.ngl-bridge-svg [class^="ngl-window-"],
+.ngl-bridge-svg [class^="ngl-morph-"],
+.ngl-bridge-svg [class^="ngl-draw-"] {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 .ngl-bridge-wall {
@@ -531,6 +553,11 @@
     margin: 22px auto 52px;
   }
 
+  .narrative-slot--bridge {
+    width: 100%;
+    padding-inline: 0;
+  }
+
   .ngl-archive-develop {
     width: 100%;
     max-width: calc(100vw - 32px);
@@ -556,7 +583,7 @@
 
   .ngl-bridge-stage {
     width: 100%;
-    max-width: calc(100vw - 32px);
+    max-width: 100%;
     gap: 18px;
     padding: 24px 18px 28px;
   }
